@@ -32,10 +32,10 @@ if ($name === '' || strlen($name) > 100 || $phone === '' || strlen($phone) > 30 
 try {
     $connection = database();
     $statement = $connection->prepare('INSERT INTO appointments (name, phone, email, service, appointment_date, appointment_time, notes) VALUES (?, ?, ?, ?, ?, ?, ?)');
-    $statement->bind_param('sssssss', $name, $phone, $email, $service, $appointmentDate, $appointmentTime, $notes);
-    $statement->execute();
+    $statement->execute([$name, $phone, $email, $service, $appointmentDate, $appointmentTime, $notes]);
     header('Location: index.html?appointment=success#appointment');
-} catch (mysqli_sql_exception $exception) {
+} catch (Throwable $exception) {
+    error_log($exception->getMessage());
     header('Location: index.html?appointment=error#appointment');
 }
 exit;

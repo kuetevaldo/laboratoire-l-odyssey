@@ -13,9 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $connection = database();
         $statement = $connection->prepare('SELECT id, patient_name, file_name, access_code_hash FROM patient_results WHERE patient_number = ? AND is_active = 1 AND (expires_at IS NULL OR expires_at >= CURDATE()) ORDER BY uploaded_at DESC');
-        $statement->bind_param('s', $patientNumber);
-        $statement->execute();
-        $results = $statement->get_result()->fetch_all(MYSQLI_ASSOC);
+        $statement->execute([$patientNumber]);
+        $results = $statement->fetchAll();
         $accessibleResultIds = [];
 
         foreach ($results as $result) {

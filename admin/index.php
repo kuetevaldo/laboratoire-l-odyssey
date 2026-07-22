@@ -18,8 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($messageId) {
             $query = $action === 'message_read' ? 'UPDATE contact_messages SET is_read = 1 WHERE id = ?' : 'DELETE FROM contact_messages WHERE id = ?';
             $statement = $connection->prepare($query);
-            $statement->bind_param('i', $messageId);
-            $statement->execute();
+            $statement->execute([$messageId]);
         }
     }
 
@@ -29,8 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $allowedStatuses = ['pending', 'confirmed', 'completed', 'cancelled'];
         if ($appointmentId && in_array($status, $allowedStatuses, true)) {
             $statement = $connection->prepare('UPDATE appointments SET status = ? WHERE id = ?');
-            $statement->bind_param('si', $status, $appointmentId);
-            $statement->execute();
+            $statement->execute([$status, $appointmentId]);
         }
     }
 
@@ -38,8 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $appointmentId = filter_input(INPUT_POST, 'appointment_id', FILTER_VALIDATE_INT);
         if ($appointmentId) {
             $statement = $connection->prepare('DELETE FROM appointments WHERE id = ?');
-            $statement->bind_param('i', $appointmentId);
-            $statement->execute();
+            $statement->execute([$appointmentId]);
         }
     }
 
@@ -47,9 +44,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 
-$appointments = $connection->query('SELECT id, name, phone, email, service, appointment_date, appointment_time, notes, status, created_at FROM appointments ORDER BY appointment_date ASC, appointment_time ASC')->fetch_all(MYSQLI_ASSOC);
-$messages = $connection->query('SELECT id, name, email, message, is_read, created_at FROM contact_messages ORDER BY created_at DESC')->fetch_all(MYSQLI_ASSOC);
-$resultsCount = (int) $connection->query('SELECT COUNT(*) AS total FROM patient_results WHERE is_active = 1')->fetch_assoc()['total'];
+$appointments = $connection->query('SELECT id, name, phone, email, service, appointment_date, appointment_time, notes, status, created_at FROM appointments ORDER BY appointment_date ASC, appointment_time ASC')->fetchAll();
+$messages = $connection->query('SELECT id, name, email, message, is_read, created_at FROM contact_messages ORDER BY created_at DESC')->fetchAll();
+$resultsCount = (int) $connection->query('SELECT COUNT(*) AS total FROM patient_results WHERE is_active = 1')->fetch(PDO::FETCH_ASSOC)['total'];
 $pendingAppointments = count(array_filter($appointments, static fn(array $appointment): bool => $appointment['status'] === 'pending'));
 $unreadMessages = count(array_filter($messages, static fn(array $message): bool => !(bool) $message['is_read']));
 
@@ -68,7 +65,7 @@ function status_label(string $status): string
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-  <link rel="stylesheet" href="./admin.css?v=20260722">
+  <link rel="stylesheet" href="./admin.css?v=4">
 </head>
 <body class="admin-page">
   <button class="sidebar-overlay" id="sidebarOverlay" type="button" aria-label="Fermer le menu"></button>

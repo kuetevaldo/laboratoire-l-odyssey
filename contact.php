@@ -25,10 +25,10 @@ if ($name === '' || strlen($name) > 100 || !filter_var($email, FILTER_VALIDATE_E
 try {
     $connection = database();
     $statement = $connection->prepare('INSERT INTO contact_messages (name, email, message) VALUES (?, ?, ?)');
-    $statement->bind_param('sss', $name, $email, $message);
-    $statement->execute();
+    $statement->execute([$name, $email, $message]);
     header('Location: index.html?contact=success#contact');
-} catch (mysqli_sql_exception $exception) {
+} catch (Throwable $exception) {
+    error_log($exception->getMessage());
     header('Location: index.html?contact=error#contact');
 }
 exit;

@@ -1,0 +1,8 @@
+.env
+config/database.php
+storage/results/*
+!storage/results/.htaccess
+!storage/results/.gitkeep
+*.log
+.DS_Store
+Thumbs.db

@@ -14,9 +14,8 @@ if (!$resultId || !is_array($allowedIds) || time() > $expiresAt || !in_array($re
 
 $connection = database();
 $statement = $connection->prepare('SELECT file_name, storage_name FROM patient_results WHERE id = ? AND is_active = 1');
-$statement->bind_param('i', $resultId);
-$statement->execute();
-$result = $statement->get_result()->fetch_assoc();
+    $statement->execute([$resultId]);
+    $result = $statement->fetch();
 $filePath = $result ? __DIR__ . '/storage/results/' . $result['storage_name'] : '';
 
 if (!$result || !is_file($filePath)) {

@@ -3,33 +3,32 @@ declare(strict_types=1);
 require_once __DIR__ . '/config/database.php';
 
 $error = '';
-
+$adminExists = false;
 try {
-    $server = new mysqli(DB_HOST, DB_USER, DB_PASSWORD);
-    $server->set_charset('utf8mb4');
-    $server->query('CREATE DATABASE IF NOT EXISTS `' . DB_NAME . '` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
+    $host = getenv('DB_HOST') ?: DB_HOST_FALLBACK;
+    $user = getenv('DB_USER') ?: DB_USER_FALLBACK;
+    $password = getenv('DB_PASSWORD') ?: DB_PASSWORD_FALLBACK;
+    $server = new PDO('mysql:host=' . $host . ';charset=utf8mb4', $user, $password, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+    $server->exec('CREATE DATABASE IF NOT EXISTS `borel_clinique` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
     $connection = database();
-    $connection->query('CREATE TABLE IF NOT EXISTS administrators (id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, username VARCHAR(50) NOT NULL UNIQUE, password_hash VARCHAR(255) NOT NULL, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP) ENGINE=InnoDB');
-    $connection->query('CREATE TABLE IF NOT EXISTS contact_messages (id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, name VARCHAR(100) NOT NULL, email VARCHAR(150) NOT NULL, message TEXT NOT NULL, is_read TINYINT(1) NOT NULL DEFAULT 0, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, INDEX (is_read, created_at)) ENGINE=InnoDB');
-    $connection->query("CREATE TABLE IF NOT EXISTS appointments (id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, name VARCHAR(100) NOT NULL, phone VARCHAR(30) NOT NULL, email VARCHAR(150) NULL, service VARCHAR(100) NOT NULL, appointment_date DATE NOT NULL, appointment_time TIME NOT NULL, notes TEXT NULL, status ENUM('pending', 'confirmed', 'completed', 'cancelled') NOT NULL DEFAULT 'pending', created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, INDEX (appointment_date, status)) ENGINE=InnoDB");
+    $connection->exec('CREATE TABLE IF NOT EXISTS administrators (id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, username VARCHAR(50) NOT NULL UNIQUE, password_hash VARCHAR(255) NOT NULL, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP) ENGINE=InnoDB');
+    $connection->exec('CREATE TABLE IF NOT EXISTS appointments (id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, name VARCHAR(100) NOT NULL, phone VARCHAR(30) NOT NULL, email VARCHAR(150) NULL, service VARCHAR(100) NOT NULL, appointment_date DATE NOT NULL, appointment_time TIME NOT NULL, notes TEXT NULL, status ENUM(\'pending\', \'confirmed\', \'completed\', \'cancelled\') NOT NULL DEFAULT \'pending\', created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, INDEX (appointment_date, status)) ENGINE=InnoDB');
+    $connection->exec('CREATE TABLE IF NOT EXISTS contact_messages (id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, name VARCHAR(100) NOT NULL, email VARCHAR(150) NOT NULL, message TEXT NOT NULL, is_read TINYINT(1) NOT NULL DEFAULT 0, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, INDEX (is_read, created_at)) ENGINE=InnoDB');
     ensure_patient_results_schema($connection);
-    $adminExists = (int) $connection->query('SELECT COUNT(*) AS total FROM administrators')->fetch_assoc()['total'] > 0;
-} catch (mysqli_sql_exception $exception) {
-    $error = 'Connexion MySQL impossible. Vérifiez les identifiants dans config/database.php et assurez-vous que MySQL est démarré.';
-    $adminExists = false;
+    $adminExists = (int) $connection->query('SELECT COUNT(*) FROM administrators')->fetchColumn() > 0;
+} catch (Throwable $exception) {
+    error_log($exception->getMessage());
+    $error = 'La configuration de la base de données est temporairement indisponible.';
 }
 
 if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && !$adminExists && $error === '') {
     $username = trim((string) ($_POST['username'] ?? ''));
     $password = (string) ($_POST['password'] ?? '');
-
     if (!preg_match('/^[A-Za-z0-9_.-]{3,50}$/', $username) || strlen($password) < 12) {
         $error = 'Utilisez un identifiant de 3 caractères minimum et un mot de passe d’au moins 12 caractères.';
     } else {
         $statement = $connection->prepare('INSERT INTO administrators (username, password_hash) VALUES (?, ?)');
-        $hash = password_hash($password, PASSWORD_DEFAULT);
-        $statement->bind_param('ss', $username, $hash);
-        $statement->execute();
+        $statement->execute([$username, password_hash($password, PASSWORD_DEFAULT)]);
         header('Location: admin/login.php?created=1');
         exit;
     }
