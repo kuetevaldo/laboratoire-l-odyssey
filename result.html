@@ -74,6 +74,12 @@
           vos résultats médicaux en toute sécurité.
         </p>
 
+        <ol class="results-steps">
+          <li><span>1</span> Recevez votre numéro de patient et votre code au laboratoire.</li>
+          <li><span>2</span> Saisissez-les dans le formulaire sécurisé.</li>
+          <li><span>3</span> Consultez ou téléchargez votre document PDF.</li>
+        </ol>
+
         <!-- FEATURES -->
         <div class="results-features">
 
@@ -127,17 +133,24 @@
         </div>
 
         <!-- FORM -->
-        <form class="results-form">
+        <form class="results-form" action="patient_results.php" method="post">
 
           <input 
             type="text"
+            name="patient_number"
             placeholder="Numéro du patient"
+            maxlength="50"
+            autocomplete="username"
+            aria-label="Numéro du patient"
             required
           >
 
           <input 
             type="password"
+            name="access_code"
             placeholder="Code sécurisé"
+            autocomplete="current-password"
+            aria-label="Code sécurisé"
             required
           >
 

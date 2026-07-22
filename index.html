@@ -41,7 +41,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
     <!-- MENU -->
     <ul class="nav-links" id="navLinks">
-      <li><a href="#">Accueil</a></li>
+      <li><a href="">Accueil</a></li>
       <li><a href="service.html">Services</a></li>
       <li><a href="result.html">Résultats</a></li>
       <li><a href="about.html">À propos</a></li>
@@ -91,19 +91,19 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
         <div class="hero-buttons">
 
-          <a
-href="https://wa.me/237695956541?text=Bonjour%20je%20souhaite%20prendre%20un%20rendez-vous"
-target="_blank"
-class="btn-primary">
+          <a href="#appointment" class="btn-primary">
+            Prendre rendez-vous
+          </a>
 
-Prendre rendez-vous
-
-</a>
-
-          <a href="http://127.0.0.1:5500/service.html" class="btn-secondary">
+          <a href="service.html" class="btn-secondary">
             Nos services
           </a>
 
+        </div>
+
+        <div class="hero-reassurance">
+          <span><i class="fa-solid fa-circle-check"></i> Résultats sécurisés</span>
+          <span><i class="fa-solid fa-clock"></i> Lun–Ven, 07h–18h</span>
         </div>
 
       </div>
@@ -261,9 +261,11 @@ Prendre rendez-vous
       <!-- VIDEO CARD 1 -->
       <div class="video-card">
 
-        <video controls poster="assets/video-thumb1.jpg">
+        <video controls preload="metadata">
 
-          <source src="assets/video1.mp4" type="video/mp4">
+          <source src="video/video1.mp4" type="video/mp4">
+
+          Votre navigateur ne prend pas en charge la lecture vidéo.
 
         </video>
 
@@ -282,9 +284,11 @@ Prendre rendez-vous
       <!-- VIDEO CARD 2 -->
       <div class="video-card">
 
-        <video controls poster="assets/video-thumb2.jpg">
+        <video controls preload="metadata">
 
-          <source src="assets/video2.mp4" type="video/mp4">
+          <source src="video/video2.mp4" type="video/mp4">
+
+          Votre navigateur ne prend pas en charge la lecture vidéo.
 
         </video>
 
@@ -444,11 +448,47 @@ Prendre rendez-vous
 </section>
 <script src="script.js"></script>
 <!-- WHATSAPP FLOAT BUTTON -->
-<a href="https://wa.me/237000000000" class="whatsapp-float" target="_blank">
+<a href="https://wa.me/237695956541" class="whatsapp-float" target="_blank" rel="noopener" aria-label="Nous contacter sur WhatsApp">
 
   <i class="fa-brands fa-whatsapp"></i>
 
 </a>
+
+<!-- APPOINTMENT SECTION -->
+<section class="appointment" id="appointment">
+
+  <div class="container">
+
+    <div class="section-header">
+      <span class="section-badge">Rendez-vous</span>
+      <h2>Planifiez votre visite</h2>
+      <p>Indiquez vos disponibilités et notre équipe vous confirmera le créneau.</p>
+    </div>
+
+    <form class="contact-form appointment-form" action="appointment.php" method="post">
+      <input type="text" name="name" placeholder="Votre nom complet" aria-label="Votre nom complet" autocomplete="name" maxlength="100" required>
+      <input type="tel" name="phone" placeholder="Votre numéro de téléphone" aria-label="Votre numéro de téléphone" autocomplete="tel" maxlength="30" required>
+      <input type="email" name="email" placeholder="Votre email" aria-label="Votre email" autocomplete="email" maxlength="150">
+      <select name="service" aria-label="Service souhaité" required>
+        <option value="">Choisissez un service</option>
+        <option value="Analyses de routine">Analyses de routine</option>
+        <option value="Bilan de santé">Bilan de santé</option>
+        <option value="Analyses spécialisées">Analyses spécialisées</option>
+        <option value="Prélèvement à domicile">Prélèvement à domicile</option>
+      </select>
+      <div class="appointment-times">
+        <input type="date" name="appointment_date" aria-label="Date souhaitée" required>
+        <input type="time" name="appointment_time" aria-label="Heure souhaitée" min="07:00" max="18:00" required>
+      </div>
+      <textarea name="notes" placeholder="Précisions facultatives" rows="4" maxlength="1000"></textarea>
+      <input type="text" name="website" class="form-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <p class="contact-feedback" id="appointmentFeedback" aria-live="polite"></p>
+      <button type="submit" class="btn-primary">Demander un rendez-vous</button>
+    </form>
+
+  </div>
+
+</section>
 
 <!-- CONTACT SECTION -->
 <section class="contact" id="contact">
@@ -478,8 +518,8 @@ Prendre rendez-vous
 
         <h3>Informations</h3>
 
-        <p><i class="fa-solid fa-phone"></i> +237 695956541</p>
-        <p><i class="fa-solid fa-envelope"></i> email.com</p>
+        <p><i class="fa-solid fa-phone"></i> <a href="tel:+237695956541">+237 695 956 541</a></p>
+        <p><i class="fa-solid fa-envelope"></i> Utilisez le formulaire ci-contre</p>
         <p><i class="fa-solid fa-location-dot"></i> Douala, Cameroun</p>
 
         <h3>Horaires</h3>
@@ -491,11 +531,13 @@ Prendre rendez-vous
       </div>
 
       <!-- FORM -->
-      <form class="contact-form">
+      <form class="contact-form" action="contact.php" method="post">
 
-        <input type="text" placeholder="Votre nom" required>
-        <input type="email" placeholder="Votre email" required>
-        <textarea placeholder="Votre message" rows="5" required></textarea>
+        <input type="text" name="name" placeholder="Votre nom" maxlength="100" required>
+        <input type="email" name="email" placeholder="Votre email" maxlength="150" required>
+        <textarea name="message" placeholder="Votre message" rows="5" maxlength="3000" required></textarea>
+        <input type="text" name="website" class="form-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <p class="contact-feedback" id="contactFeedback" aria-live="polite"></p>
 
         <button type="submit" class="btn-primary">
           Envoyer
@@ -527,6 +569,7 @@ Prendre rendez-vous
       allowfullscreen=""
       loading="lazy">
     </iframe>
+    <a class="map-directions" href="https://www.google.com/maps/search/?api=1&query=Laboratoire%20L%27Odyssey%20Douala" target="_blank" rel="noopener"><i class="fa-solid fa-diamond-turn-right"></i> Obtenir l’itinéraire</a>
   </div>
 
 </section>
@@ -569,7 +612,9 @@ Prendre rendez-vous
 
           <li><a href="result.html">Résultats</a></li>
 
-          <li><a href="http://127.0.0.1:5500/index.html#contact">Contact</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+
+          <li><a href="admin/login.php">Administration</a></li>
 
         </ul>
 
@@ -586,7 +631,7 @@ Prendre rendez-vous
         </p>
         <p>
           <i class="fa-solid fa-envelope"></i>
-          email.com
+          <a href="#contact">Écrivez-nous via le formulaire</a>
         </p>
 
         <p>

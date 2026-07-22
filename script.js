@@ -4,6 +4,38 @@
 
 const menuToggle = document.getElementById("menuToggle");
 const navLinks = document.getElementById("navLinks");
+const contactFeedback = document.getElementById("contactFeedback");
+const appointmentFeedback = document.getElementById("appointmentFeedback");
+
+if (contactFeedback) {
+  const contactStatus = new URLSearchParams(window.location.search).get("contact");
+
+  if (contactStatus === "success") {
+    contactFeedback.textContent = "Merci, votre message a bien été envoyé.";
+    contactFeedback.classList.add("success");
+  } else if (contactStatus === "error") {
+    contactFeedback.textContent = "Votre message n’a pas pu être envoyé. Vérifiez les informations et réessayez.";
+    contactFeedback.classList.add("error");
+  }
+}
+
+if (appointmentFeedback) {
+  const appointmentStatus = new URLSearchParams(window.location.search).get("appointment");
+
+  if (appointmentStatus === "success") {
+    appointmentFeedback.textContent = "Votre demande a été envoyée. Nous vous contacterons pour confirmer le rendez-vous.";
+    appointmentFeedback.classList.add("success");
+  } else if (appointmentStatus === "error") {
+    appointmentFeedback.textContent = "Votre demande n’a pas pu être envoyée. Vérifiez les informations et réessayez.";
+    appointmentFeedback.classList.add("error");
+  }
+}
+
+const appointmentDate = document.querySelector('input[name="appointment_date"]');
+
+if (appointmentDate) {
+  appointmentDate.min = new Date().toISOString().split("T")[0];
+}
 
 if (menuToggle && navLinks) {
 

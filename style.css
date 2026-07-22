@@ -1,6 +1,26 @@
 /* =========================
    CSS VARIABLES
 ========================= */
+.form-honeypot { display: none; }
+.contact-feedback { display: none; margin: 0; font-weight: 600; }
+.contact-feedback.success, .contact-feedback.error { display: block; }
+.contact-feedback.success { color: #137333; }
+.contact-feedback.error { color: #b3261e; }
+.appointment { padding: 110px 0; background: #F7FAF8; }
+.appointment-form { max-width: 760px; margin: 0 auto; }
+.appointment-form select { width: 100%; padding: 14px; border: 1px solid var(--border-color); border-radius: 8px; font: inherit; color: var(--text-color); background: var(--white-color); }
+.appointment-times { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.patient-results { min-height: 100vh; padding: 80px 20px; background: #F7FAF8; }
+.patient-results-card { max-width: 680px; margin: 0 auto; padding: 36px; background: #fff; border-radius: 16px; box-shadow: 0 10px 30px rgba(0, 0, 0, .08); }
+.back-link { display: inline-block; margin-bottom: 24px; color: var(--primary-color); font-weight: 600; }
+.result-alert { padding: 14px; border-radius: 8px; margin-bottom: 20px; }
+.result-alert.success { background: var(--primary-light); color: var(--primary-dark); }
+.result-alert.error { background: #FDE9E9; color: #B3261E; }
+.patient-result-file { padding: 20px; margin-top: 16px; border: 1px solid var(--border-color); border-left: 5px solid var(--primary-color); border-radius: 8px; }
+.patient-result-file .btn-secondary { margin-left: 8px; }
+.map { padding: var(--section-padding); background: var(--white-color); }
+.map iframe { display: block; width: 100%; min-height: 350px; border: 0; border-radius: 20px; box-shadow: var(--shadow-sm); }
+
 html,body{
     overflow-x: hidden;
     width: 100%;
@@ -959,19 +979,56 @@ ul{
   right:25px;
   width:60px;
   height:60px;
-  background:#25D366;
+  background:linear-gradient(135deg,#3bdd75,#18b957);
   color:#fff;
   border-radius:50%;
   display:flex;
   align-items:center;
   justify-content:center;
   font-size:30px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+  box-shadow:0 12px 28px rgba(37,211,102,0.38);
   z-index:9999;
-  transition:var(--transition);
+  transition:transform var(--transition), box-shadow var(--transition);
+  animation:whatsapp-pulse 2.4s ease-out infinite;
+  will-change:transform, box-shadow;
 }
 .whatsapp-float:hover{
-  transform:scale(1.1);
+  transform:scale(1.12) rotate(-6deg);
+  box-shadow:0 16px 32px rgba(37,211,102,0.48);
+  animation-play-state:paused;
+}
+
+.whatsapp-float::after{
+  content:"Écrivez-nous";
+  position:absolute;
+  right:72px;
+  padding:9px 12px;
+  border-radius:9px;
+  background:#123022;
+  color:#fff;
+  font-family:var(--font-family);
+  font-size:13px;
+  font-weight:600;
+  white-space:nowrap;
+  opacity:0;
+  pointer-events:none;
+  transform:translateX(8px);
+  transition:var(--transition);
+}
+
+.whatsapp-float:hover::after,
+.whatsapp-float:focus-visible::after{
+  opacity:1;
+  transform:translateX(0);
+}
+
+@keyframes whatsapp-pulse{
+  0%, 65%, 100%{ box-shadow:0 12px 28px rgba(37,211,102,0.38); }
+  80%{ box-shadow:0 12px 28px rgba(37,211,102,0.38), 0 0 0 14px rgba(37,211,102,0); }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .whatsapp-float{ animation:none; }
 }
 
 /* =========================
@@ -1951,6 +2008,119 @@ ul{
     font-size:28px;
   }
 
+}
+
+/* =========================
+   UX POLISH
+========================= */
+
+button, a, input, select, textarea{
+  -webkit-tap-highlight-color:transparent;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible{
+  outline:3px solid rgba(0,166,62,.35);
+  outline-offset:3px;
+}
+
+.hero-reassurance{
+  display:flex;
+  flex-wrap:wrap;
+  gap:18px;
+  margin-top:28px;
+  color:rgba(255,255,255,.88);
+  font-size:14px;
+}
+
+.hero-reassurance i{
+  color:#8bf0ae;
+  margin-right:7px;
+}
+
+.stat-box{
+  padding:20px;
+  border-radius:16px;
+  transition:var(--transition);
+}
+
+.stat-box:hover{
+  background:rgba(255,255,255,.55);
+  transform:translateY(-4px);
+}
+
+.contact-info a{
+  color:inherit;
+  font-weight:600;
+}
+
+.map-directions{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin-top:20px;
+  color:var(--primary-color);
+  font-weight:600;
+}
+
+.map-directions:hover{
+  color:var(--primary-dark);
+}
+
+.results-steps{
+  display:grid;
+  gap:14px;
+  margin-top:28px;
+}
+
+.results-steps li{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  color:var(--muted-text);
+  line-height:1.5;
+}
+
+.results-steps span{
+  display:grid;
+  place-items:center;
+  flex:0 0 30px;
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  background:var(--primary-light);
+  color:var(--primary-dark);
+  font-weight:700;
+}
+
+@media screen and (max-width: 992px){
+  .hero-reassurance{
+    justify-content:center;
+  }
+}
+
+@media screen and (max-width: 768px){
+  .hero-reassurance{
+    align-items:flex-start;
+    flex-direction:column;
+    gap:10px;
+    text-align:left;
+  }
+
+  .appointment-times{
+    grid-template-columns:1fr;
+  }
+
+  .patient-results-card{
+    padding:26px 20px;
+  }
+
+  .patient-result-file .btn-secondary{
+    margin:10px 0 0;
+  }
 }
 
 
