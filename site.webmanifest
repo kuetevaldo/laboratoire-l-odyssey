@@ -1,0 +1,19 @@
+{
+  "name": "Laboratoire L'Odyssey",
+  "short_name": "L'Odyssey",
+  "description": "Analyses médicales, consultation et échographie à Douala.",
+  "lang": "fr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f7faf8",
+  "theme_color": "#19764b",
+  "icons": [
+    {
+      "src": "images/logo.jpg",
+      "sizes": "any",
+      "type": "image/jpeg",
+      "purpose": "any"
+    }
+  ]
+}

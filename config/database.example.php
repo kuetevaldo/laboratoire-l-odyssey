@@ -1,11 +1,13 @@
 <?php
 declare(strict_types=1);
 
-// Set these values in your hosting control panel as environment variables.
-putenv('APP_ENV=production');
-putenv('DB_HOST=your-mysql-host');
-putenv('DB_NAME=your_database_name');
-putenv('DB_USER=your_database_user');
-putenv('DB_PASSWORD=your_database_password');
-
-require_once __DIR__ . '/database.php';
+return [
+    'app_env' => 'production',
+    'app_url' => 'https://www.votre-domaine.com',
+    'db_host' => 'localhost',
+    'db_port' => 3306,
+    'db_name' => 'u123456789_borel_clinique',
+    'db_user' => 'u123456789_borel_user',
+    'db_password' => 'REMPLACEZ_PAR_UN_MOT_DE_PASSE_FORT',
+    'allow_setup' => false,
+];

@@ -1,687 +1,350 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-  <title>Laboratoire L’Odyssey</title>
-
-  <!-- CSS -->
-  <link rel="stylesheet" href="style.css" />
-
-  <!-- Google Fonts -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Laboratoire L'Odyssey à Douala: analyses médicales, consultation, échographie, bilans de santé et accès sécurisé aux résultats.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#19764b">
+  <title>Laboratoire L'Odyssey | Analyses médicales à Douala</title>
+  <link rel="canonical" href="index.html">
+  <link rel="icon" href="images/logo.jpg" type="image/jpeg">
+  <link rel="manifest" href="site.webmanifest">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Laboratoire L'Odyssey">
+  <meta property="og:title" content="Laboratoire L'Odyssey | Analyses médicales à Douala">
+  <meta property="og:description" content="Analyses médicales, consultation et échographie à Douala, tous les jours de 07h à 20h.">
+  <meta property="og:url" content="index.html">
+  <meta property="og:image" content="images/hero-img.jpg">
+  <meta property="og:image:alt" content="Accueil du Laboratoire L'Odyssey à Douala">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Laboratoire L'Odyssey | Analyses médicales à Douala">
+  <meta name="twitter:description" content="Analyses médicales, consultation et échographie, 7j/7 de 07h à 20h.">
+  <meta name="twitter:image" content="images/hero-img.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-  <!-- Font Awesome -->
-  <link
-rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="style.css?v=6">
+  <script src="script.js?v=5" defer></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MedicalBusiness",
+      "@id": "./#laboratoire",
+      "name": "Laboratoire L'Odyssey",
+      "url": "./",
+      "image": "images/hero-img.jpg",
+      "logo": "images/logo.jpg",
+      "telephone": "+237695956541",
+      "priceRange": "$$",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Ndogbong Bifaga",
+        "addressLocality": "Douala",
+        "addressCountry": "CM"
+      },
+      "openingHoursSpecification": [{
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        "opens": "07:00",
+        "closes": "20:00"
+      }],
+      "sameAs": ["https://wa.me/237695956541"]
+    }
+  </script>
 </head>
-
 <body>
-  <!-- PRELOADER -->
-<div class="preloader" id="preloader">
-  <div class="loader"></div>
-</div>
+  <a class="skip-link" href="#main-content">Aller au contenu</a>
 
-  <!-- HEADER -->
-  <!-- HEADER -->
-<header class="header">
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="loader"></div>
+  </div>
 
-  <nav class="navbar container">
-
-    <!-- LOGO -->
-    <div class="logo">
-      <img src="images/logo.jpg" alt="Laboratoire Odyssey">
-    </div>
-
-    <!-- MENU -->
-    <ul class="nav-links" id="navLinks">
-      <li><a href="">Accueil</a></li>
-      <li><a href="service.html">Services</a></li>
-      <li><a href="result.html">Résultats</a></li>
-      <li><a href="about.html">À propos</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-
-    <!-- RIGHT SIDE -->
-    <div class="nav-right">
-
-      <!-- BUTTON -->
-      <a href="tel:+237695956541" class="btn-primary nav-btn">
-        Appelez-nous
+  <header class="header" id="siteHeader">
+    <nav class="navbar container" aria-label="Navigation principale">
+      <a class="brand" href="index.html" aria-label="Laboratoire L'Odyssey, accueil">
+        <img src="images/logo.jpg?v=5" alt="Laboratoire L'Odyssey" width="2172" height="724">
       </a>
 
-      <!-- HAMBURGER -->
-      <div class="menu-toggle" id="menuToggle">
-        <i class="fa-solid fa-bars"></i>
-      </div>
-
-    </div>
-
-  </nav>
-
-</header>
-
-  <!-- HERO -->
-  <section class="hero">
-
-    <div class="container hero-content">
-
-      <!-- LEFT -->
-      <div class="hero-text">
-
-        <span class="hero-badge">
-          Analyses médicales fiables
-        </span>
-
-        <h1>
-          Votre santé,<br>
-          notre priorité.
-        </h1>
-
-        <p>
-          Des services de laboratoire modernes,
-          rapides et accessibles pour tous.
-        </p>
-
-        <div class="hero-buttons">
-
-          <a href="#appointment" class="btn-primary">
-            Prendre rendez-vous
-          </a>
-
-          <a href="service.html" class="btn-secondary">
-            Nos services
-          </a>
-
-        </div>
-
-        <div class="hero-reassurance">
-          <span><i class="fa-solid fa-circle-check"></i> Résultats sécurisés</span>
-          <span><i class="fa-solid fa-clock"></i> Lun–Ven, 07h–18h</span>
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-  <!-- STATISTICS -->
-<section class="stats reveal">
-
-  <div class="container stats-grid">
-
-    <div class="stat-box">
-      <h2 class="counter" data-target="1500">0</h2>
-      <p>Patients satisfaits</p>
-    </div>
-
-    <div class="stat-box">
-      <h2 class="counter" data-target="12">0</h2>
-      <p>Années d’expérience</p>
-    </div>
-
-    <div class="stat-box">
-      <h2 class="counter" data-target="98">0</h2>
-      <p>% de précision</p>
-    </div>
-
-    <div class="stat-box">
-      <h2 class="counter" data-target="24">0</h2>
-      <p>Résultats rapides (h)</p>
-    </div>
-
-  </div>
-
-</section>
-
-  <!-- WHY CHOOSE US -->
-<section class="why-us reveal">
-
-  <div class="container">
-
-    <!-- SECTION TITLE -->
-    <div class="section-header">
-
-      <span class="section-badge">
-        Pourquoi nous choisir
-      </span>
-
-      <h2>
-        Des services médicaux fiables et modernes
-      </h2>
-
-      <p>
-        Nous mettons à votre disposition des analyses médicales
-        rapides, précises et réalisées par des professionnels qualifiés.
-      </p>
-
-    </div>
-
-    <!-- CARDS -->
-    <div class="why-us-grid">
-
-      <!-- CARD 1 -->
-      <div class="why-card">
-
-        <div class="why-icon">
-          <i class="fa-solid fa-flask"></i>
-        </div>
-
-        <h3>Équipements modernes</h3>
-
-        <p>
-          Des appareils de dernière génération pour des résultats précis.
-        </p>
-
-      </div>
-
-      <!-- CARD 2 -->
-      <div class="why-card">
-
-        <div class="why-icon">
-          <i class="fa-solid fa-user-doctor"></i>
-        </div>
-
-        <h3>Experts qualifiés</h3>
-
-        <p>
-          Une équipe expérimentée dédiée à votre santé et votre bien-être.
-        </p>
-
-      </div>
-
-      <!-- CARD 3 -->
-      <div class="why-card">
-
-        <div class="why-icon">
-          <i class="fa-solid fa-clock"></i>
-        </div>
-
-        <h3>Résultats rapides</h3>
-
-        <p>
-          Recevez vos analyses rapidement avec un service efficace.
-        </p>
-
-      </div>
-
-      <!-- CARD 4 -->
-      <div class="why-card">
-
-        <div class="why-icon">
-          <i class="fa-solid fa-shield-heart"></i>
-        </div>
-
-        <h3>Fiabilité garantie</h3>
-
-        <p>
-          Des analyses sécurisées respectant les normes médicales.
-        </p>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-<!-- VIDEO SECTION -->
-<section class="video-section reveal">
-
-  <div class="container">
-
-    <!-- HEADER -->
-    <div class="section-header">
-
-      <span class="section-badge">
-        Nos vidéos
-      </span>
-
-      <h2>
-        Découvrez notre laboratoire en action
-      </h2>
-
-      <p>
-        Explorez nos équipements modernes, notre équipe
-        professionnelle et nos services médicaux.
-      </p>
-
-    </div>
-
-    <!-- VIDEO GRID -->
-    <div class="video-grid">
-
-      <!-- VIDEO CARD 1 -->
-      <div class="video-card">
-
-        <video controls preload="metadata">
-
-          <source src="video/video1.mp4" type="video/mp4">
-
-          Votre navigateur ne prend pas en charge la lecture vidéo.
-
-        </video>
-
-        <div class="video-content">
-
-          <h3>Présentation du laboratoire</h3>
-
-          <p>
-            Découvrez nos installations modernes et notre équipe médicale.
-          </p>
-
-        </div>
-
-      </div>
-
-      <!-- VIDEO CARD 2 -->
-      <div class="video-card">
-
-        <video controls preload="metadata">
-
-          <source src="video/video2.mp4" type="video/mp4">
-
-          Votre navigateur ne prend pas en charge la lecture vidéo.
-
-        </video>
-
-        <div class="video-content">
-
-          <h3>Analyses médicales rapides</h3>
-
-          <p>
-            Un aperçu de nos procédures et technologies de pointe.
-          </p>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-<!-- TESTIMONIALS -->
-<section class="testimonials reveal">
-
-  <div class="container">
-
-    <div class="section-header">
-
-      <span class="section-badge">
-        Témoignages
-      </span>
-
-      <h2>
-        Ce que disent nos patients
-      </h2>
-
-      <p>
-        La satisfaction de nos patients est notre plus grande priorité.
-      </p>
-
-    </div>
-
-    <div class="testimonials-grid">
-
-      <!-- CARD 1 -->
-      <div class="testimonial-card">
-
-        <div class="rating">
-          <i class="fa-solid fa-star"></i>
-          <i class="fa-solid fa-star"></i>
-          <i class="fa-solid fa-star"></i>
-          <i class="fa-solid fa-star"></i>
-          <i class="fa-solid fa-star"></i>
-        </div>
-
-        <p>
-          “Service rapide et professionnel. Les résultats étaient prêts
-          en moins de 24 heures. Je recommande fortement.”
-        </p>
-
-        <div class="patient">
-
-          <img
-            src="images/avis.pic2.jpg"
-            alt="Marie N."
-            class="patient-img"
-          >
-
-          <div>
-
-            <h4>Marie N.</h4>
-
-            <span>Patiente</span>
-
-          </div>
-
-        </div>
-
-      </div>
-
-      <!-- CARD 2 -->
-      <div class="testimonial-card">
-
-        <div class="rating">
-          <i class="fa-solid fa-star"></i>
-          <i class="fa-solid fa-star"></i>
-          <i class="fa-solid fa-star"></i>
-          <i class="fa-solid fa-star"></i>
-          <i class="fa-solid fa-star"></i>
-        </div>
-
-        <p>
-          “Le personnel est très accueillant et les explications sont claires.
-          Très bon laboratoire.”
-        </p>
-
-        <div class="patient">
-
-          <img
-            src="images/avis.pic3.jpg"
-            alt="Jean P."
-            class="patient-img"
-          >
-
-          <div>
-
-            <h4>Jean P.</h4>
-
-            <span>Patient</span>
-
-          </div>
-
-        </div>
-
-      </div>
-
-      <!-- CARD 3 -->
-      <div class="testimonial-card">
-
-        <div class="rating">
-          <i class="fa-solid fa-star"></i>
-          <i class="fa-solid fa-star"></i>
-          <i class="fa-solid fa-star"></i>
-          <i class="fa-solid fa-star"></i>
-          <i class="fa-solid fa-star"></i>
-        </div>
-
-        <p>
-          “J’ai fait mon bilan de santé ici, tout était rapide et précis.
-          Excellent service.”
-        </p>
-
-        <div class="patient">
-
-          <img
-            src="images/france.jpg"
-            alt="Sophie K."
-            class="patient-img"
-          >
-
-          <div>
-
-            <h4>Sophie K.</h4>
-
-            <span>Patiente</span>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-<script src="script.js"></script>
-<!-- WHATSAPP FLOAT BUTTON -->
-<a href="https://wa.me/237695956541" class="whatsapp-float" target="_blank" rel="noopener" aria-label="Nous contacter sur WhatsApp">
-
-  <i class="fa-brands fa-whatsapp"></i>
-
-</a>
-
-<!-- APPOINTMENT SECTION -->
-<section class="appointment" id="appointment">
-
-  <div class="container">
-
-    <div class="section-header">
-      <span class="section-badge">Rendez-vous</span>
-      <h2>Planifiez votre visite</h2>
-      <p>Indiquez vos disponibilités et notre équipe vous confirmera le créneau.</p>
-    </div>
-
-    <form class="contact-form appointment-form" action="appointment.php" method="post">
-      <input type="text" name="name" placeholder="Votre nom complet" aria-label="Votre nom complet" autocomplete="name" maxlength="100" required>
-      <input type="tel" name="phone" placeholder="Votre numéro de téléphone" aria-label="Votre numéro de téléphone" autocomplete="tel" maxlength="30" required>
-      <input type="email" name="email" placeholder="Votre email" aria-label="Votre email" autocomplete="email" maxlength="150">
-      <select name="service" aria-label="Service souhaité" required>
-        <option value="">Choisissez un service</option>
-        <option value="Analyses de routine">Analyses de routine</option>
-        <option value="Bilan de santé">Bilan de santé</option>
-        <option value="Analyses spécialisées">Analyses spécialisées</option>
-        <option value="Prélèvement à domicile">Prélèvement à domicile</option>
-      </select>
-      <div class="appointment-times">
-        <input type="date" name="appointment_date" aria-label="Date souhaitée" required>
-        <input type="time" name="appointment_time" aria-label="Heure souhaitée" min="07:00" max="18:00" required>
-      </div>
-      <textarea name="notes" placeholder="Précisions facultatives" rows="4" maxlength="1000"></textarea>
-      <input type="text" name="website" class="form-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
-      <p class="contact-feedback" id="appointmentFeedback" aria-live="polite"></p>
-      <button type="submit" class="btn-primary">Demander un rendez-vous</button>
-    </form>
-
-  </div>
-
-</section>
-
-<!-- CONTACT SECTION -->
-<section class="contact" id="contact">
-
-  <div class="container">
-
-    <div class="section-header">
-
-      <span class="section-badge">
-        Contact
-      </span>
-
-      <h2>
-        Nous contacter facilement
-      </h2>
-
-      <p>
-        Une question ? Une urgence ? Notre équipe est disponible pour vous répondre.
-      </p>
-
-    </div>
-
-    <div class="contact-grid">
-
-      <!-- INFO -->
-      <div class="contact-info">
-
-        <h3>Informations</h3>
-
-        <p><i class="fa-solid fa-phone"></i> <a href="tel:+237695956541">+237 695 956 541</a></p>
-        <p><i class="fa-solid fa-envelope"></i> Utilisez le formulaire ci-contre</p>
-        <p><i class="fa-solid fa-location-dot"></i> Douala, Cameroun</p>
-
-        <h3>Horaires</h3>
-
-        <p>Lundi - Vendredi : 07h - 18h</p>
-        <p>Samedi : 08h - 14h</p>
-        <p>Dimanche : Fermé</p>
-
-      </div>
-
-      <!-- FORM -->
-      <form class="contact-form" action="contact.php" method="post">
-
-        <input type="text" name="name" placeholder="Votre nom" maxlength="100" required>
-        <input type="email" name="email" placeholder="Votre email" maxlength="150" required>
-        <textarea name="message" placeholder="Votre message" rows="5" maxlength="3000" required></textarea>
-        <input type="text" name="website" class="form-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
-        <p class="contact-feedback" id="contactFeedback" aria-live="polite"></p>
-
-        <button type="submit" class="btn-primary">
-          Envoyer
+      <ul class="nav-links" id="navLinks">
+        <li class="mobile-menu-brand"><img src="images/logo.jpg?v=5" alt="Laboratoire L'Odyssey" width="2172" height="724"></li>
+        <li><a class="active" href="index.html">Accueil</a></li>
+        <li><a href="service.html">Services</a></li>
+        <li><a href="result.html">Résultats</a></li>
+        <li><a href="about.html">À propos</a></li>
+        <li><a href="blog.php">Blog</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li class="mobile-nav-call"><a href="tel:+237695956541"><i class="fa-solid fa-phone"></i> Appeler maintenant</a></li>
+      </ul>
+
+      <div class="nav-right">
+        <a href="tel:+237695956541" class="nav-call">
+          <span class="nav-call-icon"><i class="fa-solid fa-phone"></i></span>
+          <span><small>Besoin d'aide ?</small><strong>695 956 541</strong></span>
+        </a>
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="navLinks">
+          <i class="fa-solid fa-bars" aria-hidden="true"></i>
         </button>
-
-      </form>
-
-    </div>
-
-  </div>
-
-</section>
-
-<!-- MAP -->
-<section class="map">
-
-  <div class="container">
-
-    <div class="section-header">
-      <span class="section-badge">Localisation</span>
-      <h2>Retrouvez-nous facilement</h2>
-    </div>
-
-    <iframe
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3979.766432048111!2d9.7533286!3d4.067954800000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x10610d0f18dd9d59%3A0x1da3f006f645490e!2sLaboratoire%20L%E2%80%99ODYSSEY%20SARL%20(ODYLAB)!5e0!3m2!1sfr!2scm!4v1782066187809!5m2!1sfr!2scm"
-      width="100%"
-      height="350"
-      style="border:0; border-radius:20px;"
-      allowfullscreen=""
-      loading="lazy">
-    </iframe>
-    <a class="map-directions" href="https://www.google.com/maps/search/?api=1&query=Laboratoire%20L%27Odyssey%20Douala" target="_blank" rel="noopener"><i class="fa-solid fa-diamond-turn-right"></i> Obtenir l’itinéraire</a>
-  </div>
-
-</section>
-<!-- FOOTER -->
-<footer class="footer">
-
-  <div class="container">
-
-    <div class="footer-grid">
-
-      <!-- LOGO & DESCRIPTION -->
-      <div class="footer-box">
-
-        <img
-          src="images/logo.png"
-          alt="Laboratoire L'Odyssey"
-          class="footer-logo"
-        >
-
-        <p>
-          Laboratoire médical moderne spécialisé dans les analyses
-          biologiques, les bilans de santé et les résultats fiables
-          dans les meilleurs délais.
-        </p>
-
       </div>
+    </nav>
+  </header>
 
-      <!-- QUICK LINKS -->
-      <div class="footer-box">
-
-        <h3>Liens rapides</h3>
-
-        <ul>
-
-          <li><a href="index.html">Accueil</a></li>
-
-          <li><a href="about.html">À propos</a></li>
-
-          <li><a href="service.html">Services</a></li>
-
-          <li><a href="result.html">Résultats</a></li>
-
-          <li><a href="index.html#contact">Contact</a></li>
-
-          <li><a href="admin/login.php">Administration</a></li>
-
-        </ul>
-
+  <main id="main-content">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy reveal">
+          <p class="eyebrow"><span></span> Laboratoire médical à Douala</p>
+          <h1>Des analyses fiables. Des soins plus sereins.</h1>
+          <p class="hero-lead">Analyses, consultation et échographie, 7j/7 de 07h à 20h.</p>
+          <div class="hero-actions">
+            <a href="#appointment" class="btn-primary">Prendre rendez-vous <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="result.html" class="text-link"><i class="fa-regular fa-file-lines"></i> Consulter mes résultats</a>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <!-- CONTACT -->
-      <div class="footer-box">
-
-        <h3>Contact</h3>
-
-        <p>
-          <i class="fa-solid fa-phone"></i>
-          +237 695956541
-        </p>
-        <p>
-          <i class="fa-solid fa-envelope"></i>
-          <a href="#contact">Écrivez-nous via le formulaire</a>
-        </p>
-
-        <p>
-          <i class="fa-solid fa-location-dot"></i>
-          Ndogbong Bifaga, Douala
-        </p>
-
+    <section class="trust-strip" aria-label="Informations pratiques">
+      <div class="container trust-grid">
+        <div class="trust-item"><i class="fa-solid fa-calendar-check"></i><span><strong>Sans attente inutile</strong>Rendez-vous en ligne</span></div>
+        <div class="trust-item"><i class="fa-solid fa-microscope"></i><span><strong>Analyses précises</strong>Équipements adaptés</span></div>
+        <div class="trust-item"><i class="fa-solid fa-user-doctor"></i><span><strong>Équipe disponible</strong>Écoute et orientation</span></div>
+        <a class="trust-result-link" href="result.html"><span><strong>Vos résultats</strong>Consulter ou télécharger</span><i class="fa-solid fa-arrow-right"></i></a>
       </div>
+    </section>
 
-      <!-- SOCIAL -->
-      <div class="footer-box">
+    <section class="impact-stats reveal" aria-label="Chiffres clés du laboratoire">
+      <div class="container impact-stats-grid">
+        <div class="impact-stat"><strong><span class="counter" data-target="1500">0</span>+</strong><p>Patients accompagnés</p></div>
+        <div class="impact-stat"><strong><span class="counter" data-target="12">0</span>+</strong><p>Années d'expérience</p></div>
+        <div class="impact-stat"><strong><span class="counter" data-target="98">0</span>%</strong><p>Indice de satisfaction</p></div>
+        <div class="impact-stat"><strong><span class="counter" data-target="24">0</span>h</strong><p>Délai cible pour plusieurs analyses</p></div>
+      </div>
+    </section>
 
-        <h3>Suivez-nous</h3>
-
-        <div class="social-links">
-
-          <a href="#">
-            <i class="fa-brands fa-facebook-f"></i>
-          </a>
-
-          <a href="#">
-            <i class="fa-brands fa-instagram"></i>
-          </a>
-
-          <a href="#">
-            <i class="fa-brands fa-tiktok"></i>
-          </a>
-
-          <a href="#">
-            <i class="fa-brands fa-whatsapp"></i>
-          </a>
-
+    <section class="section services-showcase" id="services">
+      <div class="container">
+        <div class="section-intro reveal">
+          <div>
+            <p class="eyebrow"><span></span> Nos services</p>
+            <h2>Un accompagnement médical qui va à l'essentiel.</h2>
+          </div>
+          <p>Du premier échange à la remise des résultats, notre équipe vous guide avec clarté selon votre besoin.</p>
         </div>
 
+        <div class="service-mosaic">
+          <article class="service-feature service-feature-large reveal">
+            <img src="images/lab-teste.JPG" alt="Analyse d'un prélèvement sanguin au laboratoire" width="828" height="461" loading="lazy">
+            <div class="service-overlay">
+              <span>01</span>
+              <h3>Analyses médicales</h3>
+              <p>Biochimie, hématologie, microbiologie et bilans adaptés à votre suivi.</p>
+              <a href="service.html">Découvrir les analyses <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+          </article>
+
+          <article class="service-feature reveal">
+            <img src="images/IMG_5331.JPG" alt="Examen d'échographie" width="194" height="194" loading="lazy">
+            <div class="service-overlay">
+              <span>02</span>
+              <h3>Échographie</h3>
+              <p>Des examens réalisés avec attention et confidentialité.</p>
+              <a href="#appointment">Choisir un créneau <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+          </article>
+
+          <article class="service-feature reveal">
+            <img src="images/consultation.jpg" alt="Consultation médicale au Laboratoire L'Odyssey" width="570" height="418" loading="lazy">
+            <div class="service-overlay">
+              <span>03</span>
+              <h3>Consultation</h3>
+              <p>Une écoute professionnelle pour mieux comprendre vos symptômes et vous orienter.</p>
+              <a href="#appointment">Prendre rendez-vous <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+          </article>
+
+          <article class="service-feature reveal">
+            <img src="images/biology-reproductif.jpg" alt="Illustration de biologie de la reproduction" width="1536" height="1024" loading="lazy">
+            <div class="service-overlay">
+              <span>04</span>
+              <h3>Biologie de la reproduction</h3>
+              <p>Bilans ciblés pour la santé reproductive féminine et masculine.</p>
+              <a href="service.html">Voir le service <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+          </article>
+        </div>
       </div>
+    </section>
 
+    <section class="section care-section">
+      <div class="container care-grid">
+        <div class="care-gallery reveal">
+          <figure class="care-main-image"><img src="images/femmel-reproductory.JPG" alt="Illustration de la santé reproductive féminine" width="1200" height="630" loading="lazy"></figure>
+          <figure class="care-small-image"><img src="images/diagnostic2.JPG" alt="Illustration de diagnostic médical" width="590" height="393" loading="lazy"></figure>
+          <div class="care-badge"><strong>Une prise en charge</strong><span>discrète et personnalisée</span></div>
+        </div>
+
+        <div class="care-content reveal">
+          <p class="eyebrow"><span></span> Votre parcours de soins</p>
+          <h2>Une équipe qui vous écoute avant de vous examiner.</h2>
+          <p>Nous accordons autant d'importance à la qualité des analyses qu'à la façon dont vous êtes accueilli et informé.</p>
+          <ul class="care-list">
+            <li><span>01</span><div><strong>Accueil et orientation</strong><p>Votre besoin est clarifié dès votre arrivée.</p></div></li>
+            <li><span>02</span><div><strong>Examen ou prélèvement</strong><p>Chaque geste est expliqué avec simplicité.</p></div></li>
+            <li><span>03</span><div><strong>Résultat et suivi</strong><p>Vos documents restent accessibles de façon sécurisée.</p></div></li>
+          </ul>
+          <a class="btn-secondary" href="about.html">Découvrir le laboratoire</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="results-callout reveal">
+      <div class="container results-callout-grid">
+        <div class="results-callout-copy">
+          <span class="results-icon"><i class="fa-solid fa-file-shield"></i></span>
+          <div>
+            <p class="eyebrow light"><span></span> Espace patient</p>
+            <h2>Vos résultats, disponibles quand vous en avez besoin.</h2>
+            <p>Utilisez le numéro patient et le code confidentiel remis par le laboratoire pour consulter ou télécharger votre document.</p>
+          </div>
+        </div>
+        <a class="btn-light" href="result.html">Accéder à mes résultats <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </section>
+
+    <section class="section video-section">
+      <div class="container">
+        <div class="section-intro reveal">
+          <div><p class="eyebrow"><span></span> En images</p><h2>Entrez dans notre quotidien.</h2></div>
+          <p>Découvrez notre cadre d'accueil et la manière dont nous organisons nos services.</p>
+        </div>
+        <div class="video-grid">
+          <article class="video-card reveal">
+            <video controls preload="metadata" poster="images/hero-img.jpg">
+              <source src="video/video1.mp4" type="video/mp4">
+              Votre navigateur ne prend pas en charge la lecture vidéo.
+            </video>
+            <div><span>Visite guidée</span><h3>Présentation du laboratoire</h3><p>Nos espaces, notre équipe et notre engagement au quotidien.</p></div>
+          </article>
+          <article class="video-card reveal">
+            <video controls preload="metadata" poster="images/lab-teste.JPG">
+              <source src="video/video2.MP4" type="video/mp4">
+              Votre navigateur ne prend pas en charge la lecture vidéo.
+            </video>
+            <div><span>Notre expertise</span><h3>Des analyses réalisées avec soin</h3><p>Un aperçu de nos méthodes et de notre environnement de travail.</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section patient-voices">
+      <div class="container voices-grid">
+        <div class="voices-heading reveal">
+          <p class="eyebrow"><span></span> Paroles de patients</p>
+          <h2>La confiance se construit à chaque visite.</h2>
+          <p>Des retours qui reflètent ce que nous cherchons à offrir: disponibilité, clarté et respect.</p>
+          <a href="#appointment" class="text-link">Planifier ma visite <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+        <blockquote class="voice-featured reveal">
+          <div class="rating" aria-label="5 étoiles"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+          <p>“Le personnel est très accueillant et les explications sont claires. Je me suis sentie rassurée du début à la fin.”</p>
+          <footer><img src="images/avis.pic2.jpg" alt="" width="52" height="52" loading="lazy"><span><strong>Marie N.</strong><small>Patiente du laboratoire</small></span></footer>
+        </blockquote>
+        <div class="voice-compact reveal">
+          <p>“Un service rapide, organisé et professionnel. Mes résultats étaient disponibles sans difficulté.”</p>
+          <span><strong>Jean P.</strong> Patient</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section appointment" id="appointment">
+      <div class="container appointment-layout">
+        <div class="appointment-copy reveal">
+          <p class="eyebrow"><span></span> Rendez-vous</p>
+          <h2>Choisissez le moment qui vous convient.</h2>
+          <p>Envoyez votre demande en quelques étapes. Notre équipe vous appellera pour confirmer le créneau.</p>
+          <div class="appointment-contact">
+            <i class="fa-solid fa-phone-volume"></i>
+            <span><small>Vous préférez appeler ?</small><a href="tel:+237695956541">+237 695 956 541</a></span>
+          </div>
+          <ul>
+            <li><i class="fa-solid fa-check"></i> Réponse rapide de notre équipe</li>
+            <li><i class="fa-solid fa-check"></i> Créneaux de 07h à 20h</li>
+            <li><i class="fa-solid fa-check"></i> Ouvert tous les jours</li>
+          </ul>
+        </div>
+
+        <form class="contact-form appointment-form reveal" action="appointment.php" method="post">
+          <div class="form-heading"><span>Demande de rendez-vous</span><p>Tous les champs marqués * sont obligatoires.</p></div>
+          <div class="form-grid">
+            <label>Nom complet *<input type="text" name="name" placeholder="Ex. Marie Kamga" autocomplete="name" maxlength="100" required></label>
+            <label>Téléphone *<input type="tel" name="phone" placeholder="Ex. 6XX XXX XXX" autocomplete="tel" maxlength="30" required></label>
+            <label>Adresse e-mail<input type="email" name="email" placeholder="vous@exemple.com" autocomplete="email" maxlength="150"></label>
+            <label>Service souhaité *<select name="service" required><option value="">Sélectionner</option><option value="Consultation">Consultation</option><option value="Bilan de santé">Bilan de santé</option><option value="Échographie">Échographie</option><option value="Prélèvement à domicile">Prélèvement à domicile</option></select></label>
+            <label>Date souhaitée *<input type="date" name="appointment_date" required></label>
+            <label>Heure souhaitée *<input type="time" name="appointment_time" min="07:00" max="20:00" required></label>
+            <label class="form-field-full">Précisions<textarea name="notes" placeholder="Ajoutez une information utile pour notre équipe" rows="4" maxlength="1000"></textarea></label>
+          </div>
+          <input type="text" name="website" class="form-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <p class="contact-feedback" id="appointmentFeedback" aria-live="polite"></p>
+          <button type="submit" class="btn-primary">Envoyer ma demande <i class="fa-solid fa-arrow-right"></i></button>
+        </form>
+      </div>
+    </section>
+
+    <section class="section contact" id="contact">
+      <div class="container contact-layout">
+        <div class="contact-panel reveal">
+          <p class="eyebrow light"><span></span> Nous joindre</p>
+          <h2>Une question avant votre visite ?</h2>
+          <p>Écrivez-nous ou utilisez l'un de nos contacts directs. Notre équipe vous répondra dès que possible.</p>
+          <div class="contact-details">
+            <a href="tel:+237695956541"><i class="fa-solid fa-phone"></i><span><small>Téléphone</small><strong>+237 695 956 541</strong></span></a>
+            <div><i class="fa-solid fa-clock"></i><span><small>Horaires</small><strong>07h - 20h, 7j/7</strong></span></div>
+            <div><i class="fa-solid fa-location-dot"></i><span><small>Adresse</small><strong>Ndogbong Bifaga, Douala</strong></span></div>
+          </div>
+        </div>
+
+        <form class="contact-form contact-message-form reveal" action="contact.php" method="post">
+          <div class="form-heading"><span>Envoyer un message</span><p>Nous vous répondrons par e-mail.</p></div>
+          <label>Votre nom *<input type="text" name="name" placeholder="Nom complet" maxlength="100" autocomplete="name" required></label>
+          <label>Votre e-mail *<input type="email" name="email" placeholder="vous@exemple.com" maxlength="150" autocomplete="email" required></label>
+          <label>Votre message *<textarea name="message" placeholder="Comment pouvons-nous vous aider ?" rows="5" maxlength="3000" required></textarea></label>
+          <input type="text" name="website" class="form-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <p class="contact-feedback" id="contactFeedback" aria-live="polite"></p>
+          <button type="submit" class="btn-primary">Envoyer le message <i class="fa-solid fa-paper-plane"></i></button>
+        </form>
+      </div>
+    </section>
+
+    <section class="location-section">
+      <div class="container location-card reveal">
+        <div class="location-heading">
+          <div><p class="eyebrow"><span></span> Localisation</p><h2>Facile à trouver, simple d'accès.</h2></div>
+          <a class="btn-secondary" href="https://www.google.com/maps/search/?api=1&query=Laboratoire%20L%27Odyssey%20Douala" target="_blank" rel="noopener"><i class="fa-solid fa-diamond-turn-right"></i> Obtenir l'itinéraire</a>
+        </div>
+        <iframe title="Carte du Laboratoire L'Odyssey à Douala" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3979.766432048111!2d9.7533286!3d4.067954800000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x10610d0f18dd9d59%3A0x1da3f006f645490e!2sLaboratoire%20L%E2%80%99ODYSSEY%20SARL%20(ODYLAB)!5e0!3m2!1sfr!2scm!4v1782066187809!5m2!1sfr!2scm" loading="lazy" allowfullscreen></iframe>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-main">
+      <div class="footer-brand">
+        <a class="brand" href="index.html"><img src="images/logo.jpg?v=5" alt="Laboratoire L'Odyssey" width="2172" height="724"></a>
+        <p>Des services médicaux accessibles, précis et humains pour accompagner votre santé au quotidien.</p>
+        <div class="footer-socials"><a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a><a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a><a href="https://wa.me/237695956541" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a></div>
+      </div>
+      <div class="footer-column"><h3>Navigation</h3><a href="service.html">Services</a><a href="result.html">Résultats patients</a><a href="about.html">À propos</a><a href="blog.php">Blog</a></div>
+      <div class="footer-column"><h3>Informations</h3><a href="#appointment">Prendre rendez-vous</a><a href="#contact">Écrivez-nous via le formulaire</a><a href="tel:+237695956541">+237 695 956 541</a><span>Ouvert 7j/7, 07h - 20h</span></div>
+      <div class="footer-column footer-admin"><h3>Espace interne</h3><p>Accès réservé à l'équipe du laboratoire.</p><a href="admin/login.php"><i class="fa-solid fa-lock"></i> Administration</a></div>
     </div>
+    <div class="container footer-bottom"><p>© 2026 Laboratoire L'Odyssey. Tous droits réservés.</p><p>Ndogbong Bifaga, Douala</p></div>
+  </footer>
 
-    <!-- BOTTOM -->
-
-    <div class="footer-bottom">
-
-      <p>
-        © 2026 Laboratoire L'Odyssey. Tous droits réservés.
-      </p>
-
-    </div>
-
-  </div>
-
-</footer>
+  <a href="https://wa.me/237695956541" class="whatsapp-float" target="_blank" rel="noopener" aria-label="Nous contacter sur WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+  <a href="tel:+237695956541" class="mobile-call-action"><span><i class="fa-solid fa-phone"></i></span><strong>Appelez-nous</strong><small>Ouvert jusqu'à 20h</small></a>
 </body>
 </html>

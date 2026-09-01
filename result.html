@@ -1,178 +1,59 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
-
   <meta charset="UTF-8">
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Resultat | Laboratoire L’Odyssey</title>
-
-  <!-- CSS -->
- <link rel="stylesheet" href="style.css"> 
-
-  <!-- GOOGLE FONTS -->
+  <meta name="description" content="Consultez et téléchargez vos résultats du Laboratoire L'Odyssey grâce à votre accès patient sécurisé.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#19764b">
+  <title>Mes résultats | Laboratoire L'Odyssey</title>
+  <link rel="canonical" href="result.html">
+  <link rel="icon" href="images/logo.jpg" type="image/jpeg">
+  <link rel="manifest" href="site.webmanifest">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Laboratoire L'Odyssey">
+  <meta property="og:title" content="Consulter mes résultats | Laboratoire L'Odyssey">
+  <meta property="og:description" content="Accédez à vos résultats médicaux avec votre numéro patient et votre code confidentiel.">
+  <meta property="og:url" content="result.html">
+  <meta name="twitter:card" content="summary">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-  <!-- FONT AWESOME -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-  >
-
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="style.css?v=6">
+  <script src="script.js?v=5" defer></script>
 </head>
-
 <body>
+  <a href="index.html" class="back-home" aria-label="Retour à l'accueil"><i class="fa-solid fa-arrow-left"></i></a>
+  <div class="preloader" id="preloader" aria-hidden="true"><div class="loader"></div></div>
 
-  <!-- BACK TO HOME -->
-<a href="index.html" class="back-home">
-
-  <i class="fa-solid fa-arrow-left"></i>
-
-</a>
- <!-- RESULTS SECTION -->
-<section class="results reveal" id="results">
-
-  <div class="container">
-
-    <!-- SECTION HEADER -->
-    <div class="section-header">
-
-      <span class="section-badge">
-        Résultats
-      </span>
-
-      <h2>
-        Consultez vos résultats d’analyses facilement
-      </h2>
-
-      <p>
-        Accédez rapidement à vos résultats médicaux
-        de manière sécurisée et confidentielle.
-      </p>
-
-    </div>
-
-    <!-- RESULTS WRAPPER -->
-    <div class="results-wrapper">
-
-      <!-- LEFT CONTENT -->
-      <div class="results-content">
-
-        <h3>
-          Un accès simple et rapide à vos analyses
-        </h3>
-
-        <p>
-          Notre laboratoire met à votre disposition
-          une plateforme moderne permettant de consulter
-          vos résultats médicaux en toute sécurité.
-        </p>
-
+  <main class="results">
+    <div class="container results-wrapper">
+      <section class="results-content reveal">
+        <p class="eyebrow"><span></span> Espace patient sécurisé</p>
+        <h1>Retrouvez vos résultats en quelques secondes.</h1>
+        <p>Votre numéro patient et votre code confidentiel vous sont remis par le laboratoire lorsque votre dossier est créé.</p>
         <ol class="results-steps">
-          <li><span>1</span> Recevez votre numéro de patient et votre code au laboratoire.</li>
-          <li><span>2</span> Saisissez-les dans le formulaire sécurisé.</li>
-          <li><span>3</span> Consultez ou téléchargez votre document PDF.</li>
+          <li><span>1</span><div><strong>Munissez-vous de vos accès</strong><br>Utilisez les informations reçues au laboratoire.</div></li>
+          <li><span>2</span><div><strong>Identifiez-vous</strong><br>Saisissez votre numéro patient et votre code.</div></li>
+          <li><span>3</span><div><strong>Consultez votre document</strong><br>Ouvrez ou téléchargez le fichier PDF disponible.</div></li>
         </ol>
+      </section>
 
-        <!-- FEATURES -->
-        <div class="results-features">
-
-          <div class="result-item">
-
-            <i class="fa-solid fa-lock"></i>
-
-            <span>Accès sécurisé</span>
-
-          </div>
-
-          <div class="result-item">
-
-            <i class="fa-solid fa-clock"></i>
-
-            <span>Disponible 24h/24</span>
-
-          </div>
-
-          <div class="result-item">
-
-            <i class="fa-solid fa-file-waveform"></i>
-
-            <span>Résultats rapides</span>
-
-          </div>
-
-          <div class="result-item">
-
-            <i class="fa-solid fa-mobile-screen"></i>
-
-            <span>Compatible mobile</span>
-
-          </div>
-
-        </div>
-
-      </div>
-
-      <!-- LOGIN CARD -->
-      <div class="results-card">
-
+      <section class="results-card reveal" aria-labelledby="result-login-title">
         <div class="results-card-header">
-
-          <i class="fa-solid fa-file-medical"></i>
-
-          <h3>
-            Consulter mes résultats
-          </h3>
-
+          <i class="fa-solid fa-file-shield"></i>
+          <h2 id="result-login-title">Accéder à mes résultats</h2>
         </div>
-
-        <!-- FORM -->
         <form class="results-form" action="patient_results.php" method="post">
-
-          <input 
-            type="text"
-            name="patient_number"
-            placeholder="Numéro du patient"
-            maxlength="50"
-            autocomplete="username"
-            aria-label="Numéro du patient"
-            required
-          >
-
-          <input 
-            type="password"
-            name="access_code"
-            placeholder="Code sécurisé"
-            autocomplete="current-password"
-            aria-label="Code sécurisé"
-            required
-          >
-
-          <button type="submit" class="btn-primary">
-
-            Accéder aux résultats
-
-          </button>
-
+          <label>Numéro patient<input type="text" name="patient_number" placeholder="Ex. ODY-000123" maxlength="50" autocomplete="username" required></label>
+          <label>Code confidentiel<input type="password" name="access_code" placeholder="Votre code sécurisé" autocomplete="current-password" required></label>
+          <button type="submit" class="btn-primary">Consulter mes résultats <i class="fa-solid fa-arrow-right"></i></button>
         </form>
-
-      </div>
-
+        <p class="results-security"><i class="fa-solid fa-lock"></i><span>Vos informations sont confidentielles. Ne partagez jamais votre code d'accès.</span></p>
+      </section>
     </div>
-
-  </div>
-
-</section>
-
-  <!-- JAVASCRIPT -->
-  <script src="script.js"></script>
-
+  </main>
 </body>
-
 </html>

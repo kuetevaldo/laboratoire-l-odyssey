@@ -1,5 +1,10 @@
-CREATE DATABASE IF NOT EXISTS `borel_clinique` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE `borel_clinique`;
+-- Hostinger-ready schema. Select the destination database in phpMyAdmin before importing.
+SET NAMES utf8mb4;
+
+CREATE TABLE IF NOT EXISTS schema_migrations (
+  version VARCHAR(50) PRIMARY KEY,
+  applied_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS administrators (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -48,3 +53,19 @@ CREATE TABLE IF NOT EXISTS patient_results (
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   INDEX idx_patient_results_number_active (patient_number, is_active)
 ) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS blog_posts (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  title VARCHAR(180) NOT NULL,
+  slug VARCHAR(200) NOT NULL UNIQUE,
+  excerpt VARCHAR(300) NOT NULL,
+  content TEXT NOT NULL,
+  cover_image VARCHAR(255) NULL,
+  is_published TINYINT(1) NOT NULL DEFAULT 0,
+  published_at DATETIME NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  INDEX idx_blog_published (is_published, published_at)
+) ENGINE=InnoDB;
+
+INSERT IGNORE INTO schema_migrations (version) VALUES ('2026-09-01-initial');

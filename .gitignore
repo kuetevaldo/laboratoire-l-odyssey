@@ -1,8 +1,15 @@
 .env
-config/database.php
+config/production.php
 storage/results/*
 !storage/results/.htaccess
 !storage/results/.gitkeep
+database/*recovered*.sql
+database/*private*.sql
+database/recovery-*.log
+database/mysql-*.log
 *.log
 .DS_Store
 Thumbs.db
+.agents/
+.claude/
+skills-lock.json

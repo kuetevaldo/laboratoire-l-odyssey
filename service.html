@@ -1,175 +1,93 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
-
   <meta charset="UTF-8">
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Services | Laboratoire L’Odyssey</title>
-
-  <!-- CSS -->
- <link rel="stylesheet" href="style.css"> 
-
-  <!-- GOOGLE FONTS -->
+  <meta name="description" content="Analyses médicales, consultation, échographie et biologie de la reproduction au Laboratoire L'Odyssey.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#19764b">
+  <title>Services | Laboratoire L'Odyssey</title>
+  <link rel="canonical" href="service.html">
+  <link rel="icon" href="images/logo.jpg" type="image/jpeg">
+  <link rel="manifest" href="site.webmanifest">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Laboratoire L'Odyssey">
+  <meta property="og:title" content="Services | Laboratoire L'Odyssey">
+  <meta property="og:description" content="Analyses médicales, consultation, échographie et biologie de la reproduction à Douala.">
+  <meta property="og:url" content="service.html">
+  <meta property="og:image" content="images/consultation.jpg">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-  <!-- FONT AWESOME -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-  >
-
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="style.css?v=6">
+  <script src="script.js?v=5" defer></script>
 </head>
-
 <body>
+  <a href="index.html" class="back-home" aria-label="Retour à l'accueil"><i class="fa-solid fa-arrow-left"></i></a>
+  <div class="preloader" id="preloader" aria-hidden="true"><div class="loader"></div></div>
 
-    <!-- BACK TO HOME -->
-<a href="index.html" class="back-home">
-
-  <i class="fa-solid fa-arrow-left"></i>
-
-</a>
-  <!-- PRELOADER -->
-  <div class="preloader" id="preloader">
-
-    <div class="loader"></div>
-
-  </div>
-<!-- SERVICES -->
-<section class="services-page reveal">
-
-  <div class="container">
-
-    <div class="section-header">
-
-      <span class="section-badge">
-        Nos Services
-      </span>
-
-      <h2>
-        Des analyses fiables pour votre santé
-      </h2>
-
-      <p>
-        Le Laboratoire L'Odyssey met à votre disposition
-        une large gamme d'analyses médicales et de bilans
-        réalisés avec des équipements modernes.
-      </p>
-
-    </div>
-
-    <div class="services-grid">
-
-      <!-- CARD 1 -->
-      <div class="service-card">
-
-        <i class="fa-solid fa-microscope"></i>
-
-        <h3>Analyses Médicales</h3>
-
-        <ul>
-          <li>Allergologie</li>
-          <li>Biochimie spécialisée</li>
-          <li>Hématologie</li>
-          <li>Endocrinologie</li>
-          <li>Microbiologie médicale</li>
-          <li>Virologie médicale</li>
-        </ul>
-
+  <main>
+    <section class="page-hero reveal">
+      <div class="container">
+        <p class="eyebrow"><span></span> Nos services</p>
+        <h1>Les bons examens, au bon moment.</h1>
+        <p>Une offre médicale claire pour vous orienter, examiner et accompagner votre suivi en toute confidentialité.</p>
       </div>
+    </section>
 
-      <!-- CARD 2 -->
-      <div class="service-card">
+    <section class="page-section">
+      <div class="container services-page-grid">
+        <article class="service-detail reveal">
+          <div class="service-detail-media"><img src="images/lab-teste.JPG" alt="Analyses médicales en laboratoire" width="828" height="461" loading="lazy"></div>
+          <div class="service-detail-copy">
+            <i class="fa-solid fa-microscope"></i>
+            <h2>Analyses médicales</h2>
+            <p>Des examens biologiques réalisés pour le dépistage, le diagnostic et le suivi de votre santé.</p>
+            <ul><li>Biochimie et hématologie</li><li>Microbiologie et virologie</li><li>Bilans diabétique, rénal et hépatique</li><li>Bilans infectieux et hormonaux</li></ul>
+          </div>
+        </article>
 
-        <i class="fa-solid fa-heart-pulse"></i>
+        <article class="service-detail reveal">
+          <div class="service-detail-media"><img src="images/IMG_5331.JPG" alt="Échographie médicale" width="194" height="194" loading="lazy"></div>
+          <div class="service-detail-copy">
+            <i class="fa-solid fa-wave-square"></i>
+            <h2>Échographie</h2>
+            <p>Un examen d'imagerie non invasif réalisé dans un cadre confidentiel, avec des explications claires.</p>
+            <ul><li>Orientation selon votre prescription</li><li>Accueil sur rendez-vous</li><li>Accompagnement avant l'examen</li><li>Compte rendu remis au patient</li></ul>
+          </div>
+        </article>
 
-        <h3>Bilans de Santé</h3>
+        <article class="service-detail reveal">
+          <div class="service-detail-media"><img src="images/consultation.jpg" alt="Consultation médicale au Laboratoire L'Odyssey" width="570" height="418" loading="lazy"></div>
+          <div class="service-detail-copy">
+            <i class="fa-solid fa-stethoscope"></i>
+            <h2>Consultation</h2>
+            <p>Un temps d'écoute pour comprendre votre besoin, évaluer vos symptômes et vous orienter vers les examens adaptés.</p>
+            <ul><li>Entretien médical</li><li>Orientation diagnostique</li><li>Lecture et explication des résultats</li><li>Conseils de suivi</li></ul>
+          </div>
+        </article>
 
-        <ul>
-          <li>Bilan infectieux</li>
-          <li>Bilan diabétique</li>
-          <li>Bilan cardio-vasculaire</li>
-          <li>Bilan hépatique</li>
-          <li>Bilan rénal</li>
-          <li>Bilan hormonal</li>
-        </ul>
-
+        <article class="service-detail reveal">
+          <div class="service-detail-media"><img src="images/biology-reproductif.jpg" alt="Illustration de biologie de la reproduction" width="1536" height="1024" loading="lazy"></div>
+          <div class="service-detail-copy">
+            <i class="fa-solid fa-venus-mars"></i>
+            <h2>Biologie de la reproduction</h2>
+            <p>Des bilans ciblés pour accompagner la santé reproductive féminine et masculine avec discrétion.</p>
+            <ul><li>Bilan hormonal</li><li>Spermogramme</li><li>Bilan prénatal et prénuptial</li><li>Examens de fertilité</li></ul>
+          </div>
+        </article>
       </div>
+    </section>
 
-      <!-- CARD 3 -->
-      <div class="service-card">
-
-        <i class="fa-solid fa-baby"></i>
-
-        <h3>Bilans Spécialisés</h3>
-
-        <ul>
-          <li>Bilan prénatal</li>
-          <li>Bilan prénuptial</li>
-          <li>Bilan sportif</li>
-          <li>Bilan familial</li>
-          <li>Biologie de la reproduction</li>
-          <li>Cytogénétique</li>
-        </ul>
-
+    <section class="services-cta">
+      <div class="container">
+        <div><h2>Vous ne savez pas quel service choisir ?</h2><p>Décrivez votre besoin à notre équipe. Nous vous aiderons à préparer votre visite.</p></div>
+        <a href="index.html#appointment" class="btn-light">Demander un rendez-vous <i class="fa-solid fa-arrow-right"></i></a>
       </div>
-
-      <!-- CARD 4 -->
-      <div class="service-card">
-
-        <i class="fa-solid fa-droplet"></i>
-
-        <h3>Analyses des Eaux</h3>
-
-        <ul>
-          <li>Contrôle microbiologique</li>
-          <li>Analyse sanitaire</li>
-          <li>Contrôle qualité</li>
-          <li>Diagnostic environnemental</li>
-        </ul>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-<!-- WHATSAPP CTA -->
-<section class="services-cta">
-
-  <div class="container">
-
-    <h2>
-      Besoin d'informations ?
-    </h2>
-
-    <p>
-      Notre équipe est disponible pour répondre à vos questions
-      et vous orienter vers les examens adaptés à vos besoins.
-    </p>
-
-    <a href="https://wa.me/237676522487" class="btn-primary">
-
-      <i class="fa-brands fa-whatsapp"></i>
-      Contactez-nous
-
-    </a>
-
-  </div>
-
-</section>
-
-  <!-- JAVASCRIPT -->
-  <script src="script.js"></script>
-
+    </section>
+  </main>
 </body>
-
 </html>

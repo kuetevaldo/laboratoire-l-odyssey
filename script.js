@@ -1,172 +1,232 @@
-/* =========================
-   MOBILE MENU
-========================= */
+document.documentElement.classList.add("js-ready");
 
 const menuToggle = document.getElementById("menuToggle");
 const navLinks = document.getElementById("navLinks");
 const contactFeedback = document.getElementById("contactFeedback");
 const appointmentFeedback = document.getElementById("appointmentFeedback");
 
-if (contactFeedback) {
-  const contactStatus = new URLSearchParams(window.location.search).get("contact");
+const setMenuState = (isOpen) => {
+  if (!menuToggle || !navLinks) return;
 
-  if (contactStatus === "success") {
-    contactFeedback.textContent = "Merci, votre message a bien été envoyé.";
-    contactFeedback.classList.add("success");
-  } else if (contactStatus === "error") {
-    contactFeedback.textContent = "Votre message n’a pas pu être envoyé. Vérifiez les informations et réessayez.";
-    contactFeedback.classList.add("error");
+  navLinks.classList.toggle("active", isOpen);
+  document.body.classList.toggle("menu-open", isOpen);
+  menuToggle.setAttribute("aria-expanded", String(isOpen));
+  menuToggle.setAttribute("aria-label", isOpen ? "Fermer le menu" : "Ouvrir le menu");
+
+  const icon = menuToggle.querySelector("i");
+  if (icon) {
+    icon.classList.toggle("fa-bars", !isOpen);
+    icon.classList.toggle("fa-xmark", isOpen);
   }
-}
-
-if (appointmentFeedback) {
-  const appointmentStatus = new URLSearchParams(window.location.search).get("appointment");
-
-  if (appointmentStatus === "success") {
-    appointmentFeedback.textContent = "Votre demande a été envoyée. Nous vous contacterons pour confirmer le rendez-vous.";
-    appointmentFeedback.classList.add("success");
-  } else if (appointmentStatus === "error") {
-    appointmentFeedback.textContent = "Votre demande n’a pas pu être envoyée. Vérifiez les informations et réessayez.";
-    appointmentFeedback.classList.add("error");
-  }
-}
-
-const appointmentDate = document.querySelector('input[name="appointment_date"]');
-
-if (appointmentDate) {
-  appointmentDate.min = new Date().toISOString().split("T")[0];
-}
+};
 
 if (menuToggle && navLinks) {
-
-  menuToggle.addEventListener("click", (e) => {
-    e.stopPropagation();
-    navLinks.classList.toggle("active");
+  menuToggle.addEventListener("click", (event) => {
+    event.stopPropagation();
+    setMenuState(!navLinks.classList.contains("active"));
   });
 
-  document.addEventListener("click", (e) => {
-
-    const isClickInsideMenu = navLinks.contains(e.target);
-    const isClickToggle = menuToggle.contains(e.target);
-
-    if (!isClickInsideMenu && !isClickToggle) {
-      navLinks.classList.remove("active");
+  document.addEventListener("click", (event) => {
+    if (!navLinks.contains(event.target) && !menuToggle.contains(event.target)) {
+      setMenuState(false);
     }
-
   });
 
-  document.querySelectorAll(".nav-links a").forEach(link => {
-
-    link.addEventListener("click", () => {
-      navLinks.classList.remove("active");
-    });
-
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      setMenuState(false);
+      menuToggle.focus();
+    }
   });
 
+  navLinks.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => setMenuState(false));
+  });
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 980) {
+      setMenuState(false);
+    }
+  });
 }
 
-/* =========================
-   SCROLL REVEAL
-========================= */
+const updateFeedbackFromUrl = (feedback, parameter, successMessage, errorMessage) => {
+  if (!feedback) return;
+
+  const status = new URLSearchParams(window.location.search).get(parameter);
+  if (status === "success") {
+    feedback.textContent = successMessage;
+    feedback.className = "contact-feedback success";
+  } else if (status === "error") {
+    feedback.textContent = errorMessage;
+    feedback.className = "contact-feedback error";
+  }
+};
+
+updateFeedbackFromUrl(
+  contactFeedback,
+  "contact",
+  "Merci, votre message a bien été envoyé.",
+  "Votre message n'a pas pu être envoyé. Vérifiez les informations et réessayez."
+);
+
+updateFeedbackFromUrl(
+  appointmentFeedback,
+  "appointment",
+  "Votre demande a été envoyée. Nous vous contacterons pour confirmer le rendez-vous.",
+  "Votre demande n'a pas pu être envoyée. Vérifiez les informations et réessayez."
+);
+
+const appointmentDate = document.querySelector('input[name="appointment_date"]');
+if (appointmentDate) {
+  const today = new Date();
+  const localDate = new Date(today.getTime() - today.getTimezoneOffset() * 60000)
+    .toISOString()
+    .split("T")[0];
+  appointmentDate.min = localDate;
+}
 
 const revealElements = document.querySelectorAll(".reveal");
+if ("IntersectionObserver" in window) {
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("active");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.12 }
+  );
 
-const revealObserver = new IntersectionObserver(
-  (entries) => {
+  revealElements.forEach((element) => revealObserver.observe(element));
+} else {
+  revealElements.forEach((element) => element.classList.add("active"));
+}
 
-    entries.forEach(entry => {
+const counterElements = document.querySelectorAll(".counter[data-target]");
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-      if (entry.isIntersecting) {
-        entry.target.classList.add("active");
-        revealObserver.unobserve(entry.target);
-      }
+const setCounterValue = (counter, value) => {
+  counter.textContent = new Intl.NumberFormat("fr-FR").format(value);
+};
 
-    });
+const animateCounter = (counter) => {
+  const target = Number(counter.dataset.target);
+  if (!Number.isFinite(target)) return;
 
-  },
-  {
-    threshold: 0.15
+  if (prefersReducedMotion) {
+    setCounterValue(counter, target);
+    return;
   }
-);
 
-revealElements.forEach(el => {
-  revealObserver.observe(el);
-});
+  const duration = 1700;
+  const startTime = performance.now();
+  const easeOutCubic = (progress) => 1 - Math.pow(1 - progress, 3);
 
-/* =========================
-   COUNTER ANIMATION
-========================= */
+  const updateCounter = (currentTime) => {
+    const progress = Math.min((currentTime - startTime) / duration, 1);
+    setCounterValue(counter, Math.round(target * easeOutCubic(progress)));
 
-const counters = document.querySelectorAll(".counter");
+    if (progress < 1) {
+      window.requestAnimationFrame(updateCounter);
+    }
+  };
 
-const counterObserver = new IntersectionObserver(
-  (entries) => {
+  window.requestAnimationFrame(updateCounter);
+};
 
-    entries.forEach(entry => {
+if ("IntersectionObserver" in window) {
+  const counterObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.45 }
+  );
 
-      if (entry.isIntersecting) {
+  counterElements.forEach((counter) => counterObserver.observe(counter));
+} else {
+  counterElements.forEach(animateCounter);
+}
 
-        const counter = entry.target;
-
-        const target = +counter.dataset.target;
-
-        let current = 0;
-
-        const increment = target / 100;
-
-        const updateCounter = () => {
-
-          current += increment;
-
-          if (current < target) {
-
-            counter.innerText = Math.ceil(current);
-
-            requestAnimationFrame(updateCounter);
-
-          } else {
-
-            counter.innerText = target;
-
-          }
-
-        };
-
-        updateCounter();
-
-        counterObserver.unobserve(counter);
-
-      }
-
-    });
-
-  },
-  {
-    threshold: 0.5
-  }
-);
-
-counters.forEach(counter => {
-  counter.innerText = "0";
-  counterObserver.observe(counter);
-});
-
-/* =========================
-   PRELOADER
-========================= */
-
-window.addEventListener("load", () => {
-
+const hidePreloader = () => {
   const preloader = document.getElementById("preloader");
+  if (!preloader) return;
 
-  if (preloader) {
+  window.requestAnimationFrame(() => {
+    preloader.classList.add("hidden");
+    window.setTimeout(() => preloader.remove(), 450);
+  });
+};
 
-    preloader.style.opacity = "0";
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", hidePreloader, { once: true });
+} else {
+  hidePreloader();
+}
 
-    setTimeout(() => {
-      preloader.style.display = "none";
-    }, 500);
+const setupAsyncForm = (form, feedback, successMessage, errorMessage) => {
+  if (!form || !feedback) return;
 
-  }
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-});
+    const button = form.querySelector('button[type="submit"]');
+    const originalText = button ? button.innerHTML : "";
+    feedback.className = "contact-feedback success";
+    feedback.textContent = "Envoi en cours...";
+
+    if (button) {
+      button.disabled = true;
+      button.textContent = "Envoi en cours...";
+    }
+
+    try {
+      const response = await fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { Accept: "application/json" }
+      });
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error("Form submission failed");
+      }
+
+      form.reset();
+      if (appointmentDate) {
+        appointmentDate.min = new Date().toISOString().split("T")[0];
+      }
+      feedback.className = "contact-feedback success";
+      feedback.textContent = successMessage;
+    } catch (error) {
+      feedback.className = "contact-feedback error";
+      feedback.textContent = errorMessage;
+    } finally {
+      if (button) {
+        button.disabled = false;
+        button.innerHTML = originalText;
+      }
+    }
+  });
+};
+
+setupAsyncForm(
+  document.querySelector('form[action="contact.php"]'),
+  contactFeedback,
+  "Merci, votre message a bien été envoyé.",
+  "Votre message n'a pas pu être envoyé. Vérifiez les informations et réessayez."
+);
+
+setupAsyncForm(
+  document.querySelector('form[action="appointment.php"]'),
+  appointmentFeedback,
+  "Votre demande a été envoyée. Nous vous contacterons pour confirmer le rendez-vous.",
+  "Votre demande n'a pas pu être envoyée. Vérifiez les informations et réessayez."
+);

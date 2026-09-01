@@ -16,7 +16,7 @@ $connection = database();
 $statement = $connection->prepare('SELECT file_name, storage_name FROM patient_results WHERE id = ? AND is_active = 1');
     $statement->execute([$resultId]);
     $result = $statement->fetch();
-$filePath = $result ? __DIR__ . '/storage/results/' . $result['storage_name'] : '';
+$filePath = $result ? __DIR__ . '/storage/results/' . basename((string) $result['storage_name']) : '';
 
 if (!$result || !is_file($filePath)) {
     http_response_code(404);

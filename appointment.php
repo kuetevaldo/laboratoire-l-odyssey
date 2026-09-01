@@ -2,6 +2,24 @@
 declare(strict_types=1);
 require_once __DIR__ . '/config/database.php';
 
+function wants_json_response(): bool
+{
+    return strpos(strtolower((string) ($_SERVER['HTTP_ACCEPT'] ?? '')), 'application/json') !== false;
+}
+
+function respond_to_form(bool $success, string $location): void
+{
+    if (wants_json_response()) {
+        http_response_code($success ? 200 : 422);
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode(['success' => $success], JSON_UNESCAPED_UNICODE);
+        exit;
+    }
+
+    header('Location: ' . $location);
+    exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: index.html#appointment');
     exit;
@@ -15,27 +33,24 @@ $appointmentDate = trim((string) ($_POST['appointment_date'] ?? ''));
 $appointmentTime = trim((string) ($_POST['appointment_time'] ?? ''));
 $notes = trim((string) ($_POST['notes'] ?? ''));
 $honeypot = trim((string) ($_POST['website'] ?? ''));
-$allowedServices = ['Analyses de routine', 'Bilan de santé', 'Analyses spécialisées', 'Prélèvement à domicile'];
+$allowedServices = ['Consultation', 'Bilan de santé', 'Échographie', 'Prélèvement à domicile'];
 $date = DateTime::createFromFormat('Y-m-d', $appointmentDate);
 $time = DateTime::createFromFormat('H:i', $appointmentTime);
 
 if ($honeypot !== '') {
-    header('Location: index.html#appointment');
-    exit;
+    respond_to_form(false, 'index.html#appointment');
 }
 
 if ($name === '' || strlen($name) > 100 || $phone === '' || strlen($phone) > 30 || ($email !== '' && (!filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($email) > 150)) || !in_array($service, $allowedServices, true) || !$date || $date->format('Y-m-d') !== $appointmentDate || $date < new DateTime('today') || !$time || $time->format('H:i') !== $appointmentTime || strlen($notes) > 1000) {
-    header('Location: index.html?appointment=error#appointment');
-    exit;
+    respond_to_form(false, 'index.html?appointment=error#appointment');
 }
 
 try {
     $connection = database();
     $statement = $connection->prepare('INSERT INTO appointments (name, phone, email, service, appointment_date, appointment_time, notes) VALUES (?, ?, ?, ?, ?, ?, ?)');
     $statement->execute([$name, $phone, $email, $service, $appointmentDate, $appointmentTime, $notes]);
-    header('Location: index.html?appointment=success#appointment');
+    respond_to_form(true, 'index.html?appointment=success#appointment');
 } catch (Throwable $exception) {
     error_log($exception->getMessage());
-    header('Location: index.html?appointment=error#appointment');
+    respond_to_form(false, 'index.html?appointment=error#appointment');
 }
-exit;

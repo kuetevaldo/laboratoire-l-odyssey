@@ -1,73 +1,104 @@
-# Borel Clinique production deployment
+# Déploiement Hostinger — Laboratoire L'Odyssey
 
-This application requires Apache, PHP 8.1 or newer, MySQL/MariaDB, PHP sessions, and HTTPS. GitHub Pages and other static hosting services cannot execute this project’s PHP files.
+Le site nécessite un hébergement PHP/MySQL. Il ne peut pas fonctionner sur GitHub Pages, car l'administration, les formulaires, le blog et les résultats patients utilisent PHP et MariaDB/MySQL.
 
-## 1. Upload the files
+## 1. Préparer l'hébergement
 
-Purchase a PHP/MySQL shared-hosting plan with cPanel. Upload the project contents into `public_html` using cPanel File Manager or FTP. Keep the folders `admin`, `config`, `database`, `images`, `storage`, and `video` in the same structure as this repository.
+Dans hPanel Hostinger :
 
-Do not upload the local PDF files inside `storage/results`. The repository ignores them. Create `storage/results` on the host and keep its `.htaccess` and `.gitkeep` files.
+1. Activez PHP 8.1 ou une version plus récente.
+2. Vérifiez les extensions `pdo_mysql`, `fileinfo`, `mbstring` et `openssl`.
+3. Activez le certificat SSL du domaine.
+4. Créez une base MySQL et son utilisateur dans **Sites Web → Tableau de bord → Bases de données MySQL**.
 
-## 2. Create the database
+Hostinger ajoute généralement un préfixe `u..._` au nom de la base et à l'utilisateur. Conservez exactement les valeurs affichées dans hPanel.
 
-In cPanel, open **MySQL Databases**:
+## 2. Importer la base de données
 
-1. Create a database, for example `account_borel_clinique`.
-2. Create a dedicated database user with a long unique password.
-3. Add the user to the database with **All Privileges**.
-4. Open phpMyAdmin, select the new database, choose **Import**, and upload `database/borel_clinique.sql`.
+Ouvrez phpMyAdmin depuis hPanel, sélectionnez la base créée, puis utilisez **Importer**.
 
-Shared hosts often prefix database names and users with the cPanel account name. Use the exact prefixed values in the next step.
+- Nouvelle installation : importez `database/borel_clinique.sql`.
+- Migration des données XAMPP actuelles : importez `database/borel_clinique_recovered.sql`.
 
-## 3. Configure credentials
+Le schéma public ne contient ni `CREATE DATABASE`, ni `USE`, ni `GRANT`, ce qui le rend compatible avec l'import Hostinger. Le fichier récupéré contient des données privées : ne le placez pas dans GitHub et supprimez-le de `public_html` immédiatement après l'import.
 
-Set these environment variables in the hosting control panel if it supports them:
+## 3. Configurer la production
 
-```text
-APP_ENV=production
-DB_HOST=your-host-database-host
-DB_NAME=your-prefixed-database-name
-DB_USER=your-prefixed-database-user
-DB_PASSWORD=your-database-password
+Copiez `config/database.example.php` vers `config/production.php`, puis remplacez toutes les valeurs :
+
+```php
+<?php
+declare(strict_types=1);
+
+return [
+    'app_env' => 'production',
+    'app_url' => 'https://www.votre-domaine.com',
+    'db_host' => 'localhost',
+    'db_port' => 3306,
+    'db_name' => 'u123456789_borel_clinique',
+    'db_user' => 'u123456789_borel_user',
+    'db_password' => 'VOTRE_MOT_DE_PASSE_FORT',
+    'allow_setup' => false,
+];
 ```
 
-The application uses safe local XAMPP fallback values only when variables are absent. Never commit real hosting credentials. Keep `config/database.php` out of public source control when your hosting provider requires a manually configured file; use `config/database.example.php` as the template.
+N'envoyez jamais `config/production.php` sur GitHub. Si Hostinger fournit un hôte MySQL différent de `localhost`, utilisez la valeur indiquée dans hPanel.
 
-## 4. Create the first administrator
+## 4. Envoyer les fichiers
 
-Open `https://your-domain.example/setup.php`, create an administrator with a password of at least 12 characters, and then open `https://your-domain.example/admin/login.php`.
+Envoyez le contenu du projet dans `public_html` avec le gestionnaire de fichiers Hostinger, FTP ou SFTP. Le fichier `index.html` doit se trouver directement dans `public_html`.
 
-After the first administrator is created, remove or protect `setup.php` from public access using cPanel File Manager. Do not leave the setup page available on a public production site.
+N'envoyez pas :
 
-## 5. Set permissions
+- `.git` et les fichiers de développement ;
+- les journaux `database/*.log` ;
+- les sauvegardes SQL privées après leur import ;
+- les anciens PDF de test dans `storage/results`.
 
-Use normal hosting permissions, commonly `755` for folders and `644` for PHP/CSS/HTML files. The PHP process must be able to write to `storage/results` (commonly `755`, or the hosting provider’s documented writable permission). Do not make the whole project world-writable.
+Conservez les fichiers `.htaccess`, y compris ceux de `admin`, `config`, `database`, `images/blog` et `storage`. Ils protègent les fichiers sensibles et forcent HTTPS en production.
 
-The `storage/results/.htaccess` file blocks directory browsing and direct access. Patient documents must be accessed through `result_file.php` after patient verification.
+## 5. Dossiers accessibles en écriture
 
-## 6. Test the application
+Le compte PHP doit pouvoir écrire dans :
 
-Test each flow over HTTPS:
+- `storage/results` pour les PDF patients ;
+- `images/blog` pour les images d'articles.
 
-- Open the homepage and submit an appointment request.
-- Confirm the appointment appears in `admin/index.php`.
-- Submit the contact form and confirm the message appears in the dashboard.
-- Log in and log out of the administration area.
-- Upload a PDF from `admin/results.php` with a patient number and code.
-- Use `result.html` with the patient number and code to view and download it.
-- Confirm a wrong code is rejected and an expired/deactivated result cannot be accessed.
-- Confirm a file placed directly in `storage/results` cannot be browsed or downloaded by URL.
+Utilisez normalement `755` pour les dossiers et `644` pour les fichiers. N'utilisez `775` que si Hostinger l'exige. N'utilisez jamais `777`.
 
-## 7. Domain and HTTPS
+## 6. Créer l'administrateur
 
-Point the domain’s DNS records to the hosting account as instructed by the host. Enable the host’s free SSL certificate (usually AutoSSL/Let’s Encrypt), force HTTPS, and verify that the browser shows a valid certificate before uploading real patient documents.
+Si vous avez importé la base XAMPP actuelle, le compte administrateur existe déjà.
 
-## Production security checklist
+Pour une base neuve :
 
-- Use a dedicated database user, never the MySQL `root` user.
-- Keep `APP_ENV=production` enabled so detailed PHP errors are not displayed.
-- Use HTTPS for every patient and administrator request.
-- Set regular database and `storage/results` backups through the hosting provider.
-- Do not commit `.env`, database credentials, patient data, or laboratory PDFs.
-- Add rate limiting or hosting WAF protection to login and patient-result endpoints.
-- Configure email/WhatsApp notifications through a production provider instead of relying on local mail settings.
+1. Mettez temporairement `'allow_setup' => true` dans `config/production.php`.
+2. Ouvrez `https://www.votre-domaine.com/setup.php`.
+3. Créez un mot de passe d'au moins 12 caractères.
+4. Remettez immédiatement `'allow_setup' => false`.
+
+La page de configuration répond ensuite comme une page inexistante.
+
+## 7. Vérifications après publication
+
+Testez le site uniquement en HTTPS :
+
+- accueil, menu mobile et bouton d'appel ;
+- formulaire de rendez-vous et formulaire de contact ;
+- connexion et déconnexion administrateur ;
+- modification du nom et du mot de passe administrateur ;
+- publication d'un article avec image ;
+- ajout, activation, désactivation et suppression d'un résultat patient ;
+- consultation d'un PDF avec un bon code et refus avec un mauvais code ;
+- `robots.txt` et `sitemap.xml` ;
+- refus d'accès direct à `/config`, `/database` et `/storage`.
+
+Ajoutez ensuite `https://www.votre-domaine.com/sitemap.xml` dans Google Search Console.
+
+## 8. Sauvegardes et confidentialité
+
+- Programmez des sauvegardes de la base et de `storage/results`.
+- Ne placez jamais de résultats patients, mots de passe ou exports SQL dans GitHub.
+- Utilisez un utilisateur MySQL dédié, jamais `root`.
+- Gardez `app_env` sur `production` pour masquer les erreurs techniques aux visiteurs.
+- Supprimez régulièrement les résultats expirés ou inutiles depuis l'administration.

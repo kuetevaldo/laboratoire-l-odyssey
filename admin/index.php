@@ -44,8 +44,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 
-$appointments = $connection->query('SELECT id, name, phone, email, service, appointment_date, appointment_time, notes, status, created_at FROM appointments ORDER BY appointment_date ASC, appointment_time ASC')->fetchAll();
-$messages = $connection->query('SELECT id, name, email, message, is_read, created_at FROM contact_messages ORDER BY created_at DESC')->fetchAll();
+$appointments = $connection->query('SELECT id, name, phone, email, service, appointment_date, appointment_time, notes, status, created_at FROM appointments ORDER BY appointment_date ASC, appointment_time ASC')->fetchAll(PDO::FETCH_ASSOC);
+$messages = $connection->query('SELECT id, name, email, message, is_read, created_at FROM contact_messages ORDER BY created_at DESC')->fetchAll(PDO::FETCH_ASSOC);
 $resultsCount = (int) $connection->query('SELECT COUNT(*) AS total FROM patient_results WHERE is_active = 1')->fetch(PDO::FETCH_ASSOC)['total'];
 $pendingAppointments = count(array_filter($appointments, static fn(array $appointment): bool => $appointment['status'] === 'pending'));
 $unreadMessages = count(array_filter($messages, static fn(array $message): bool => !(bool) $message['is_read']));
@@ -60,27 +60,28 @@ function status_label(string $status): string
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Administration | Borel Clinique</title>
+  <title>Administration | Laboratoire L’Odyssey</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-  <link rel="stylesheet" href="./admin.css?v=4">
+  <link rel="stylesheet" href="./admin.css?v=20260901">
 </head>
 <body class="admin-page">
   <button class="sidebar-overlay" id="sidebarOverlay" type="button" aria-label="Fermer le menu"></button>
   <aside class="sidebar" id="sidebar">
-    <div class="sidebar-brand"><span class="brand-mark"><i class="fa-solid fa-plus"></i></span><div><strong>Borel</strong><small>Clinique</small></div></div>
+    <div class="sidebar-brand"><img class="sidebar-brand-logo" src="../images/logo.jpg?v=5" alt="Laboratoire L'Odyssey"></div>
     <p class="sidebar-label">Navigation</p>
     <nav class="sidebar-nav" aria-label="Navigation administration">
       <a class="active" href="index.php"><i class="fa-solid fa-grid-2"></i><span>Dashboard</span></a>
       <a href="#appointments"><i class="fa-regular fa-calendar-check"></i><span>Rendez-vous</span><b><?= count($appointments) ?></b></a>
       <a href="#messages"><i class="fa-regular fa-envelope"></i><span>Messages</span><b><?= $unreadMessages ?></b></a>
       <a href="results.php"><i class="fa-solid fa-file-medical"></i><span>Résultats patients</span></a>
+      <a href="blog.php"><i class="fa-solid fa-newspaper"></i><span>Blog</span></a>
     </nav>
     <p class="sidebar-label">Compte</p>
     <nav class="sidebar-nav">
-      <a href="#settings"><i class="fa-solid fa-sliders"></i><span>Paramètres</span></a>
+      <a href="settings.php"><i class="fa-solid fa-sliders"></i><span>Paramètres</span></a>
       <a class="sidebar-logout" href="logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Se déconnecter</span></a>
     </nav>
     <div class="sidebar-footer"><i class="fa-solid fa-shield-heart"></i><span>Données protégées</span></div>
