@@ -23,6 +23,7 @@ export async function POST(request: NextRequest) {
     await createAdminSession({ adminId: admin.id, username: admin.username, displayName: admin.displayName });
     return apiSuccess({ message: "Connexion réussie." });
   } catch (error) {
+    console.error("[admin/login error]", error instanceof Error ? error.message : error);
     return apiError(readableError(error, "Connexion impossible pour le moment."));
   }
 }
