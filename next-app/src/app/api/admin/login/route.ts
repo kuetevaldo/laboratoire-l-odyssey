@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 import { getDb } from "@/db";
 import { administrators } from "@/db/schema";
 import { apiError, apiSuccess, readableError } from "@/lib/api";
-import { createAdminSession, verifyPassword } from "@/lib/auth";
+import { ADMIN_COOKIE, createAdminSession, secureCookieOptions, verifyPassword } from "@/lib/auth";
 import { assertSameOrigin, clearRateLimit, isRateLimited, recordRateFailure, requestIp } from "@/lib/security";
 import { adminLoginSchema } from "@/lib/validators";
 
@@ -20,8 +20,10 @@ export async function POST(request: NextRequest) {
       return apiError("Identifiants incorrects.", 401);
     }
     await clearRateLimit(rateKey);
-    await createAdminSession({ adminId: admin.id, username: admin.username, displayName: admin.displayName });
-    return apiSuccess({ message: "Connexion réussie." });
+    const token = await createAdminSession({ adminId: admin.id, username: admin.username, displayName: admin.displayName });
+    const response = apiSuccess({ message: "Connexion réussie." });
+    response.cookies.set(ADMIN_COOKIE, token, secureCookieOptions(60 * 60 * 8));
+    return response;
   } catch (error) {
     console.error("[admin/login error]", error instanceof Error ? error.message : error);
     return apiError(readableError(error, "Connexion impossible pour le moment."));

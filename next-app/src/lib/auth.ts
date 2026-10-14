@@ -1,26 +1,32 @@
 import "server-only";
 
+import { createHmac } from "node:crypto";
 import bcrypt from "bcryptjs";
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import type { NextRequest } from "next/server";
 
-const ADMIN_COOKIE = "odyssey_admin_session";
-const PATIENT_COOKIE = "odyssey_patient_session";
+export const ADMIN_COOKIE = "odyssey_admin_session";
+export const PATIENT_COOKIE = "odyssey_patient_session";
 
 type AdminSession = { adminId: number; username: string; displayName: string };
 type PatientSession = { resultIds: number[] };
 
 function secret(): Uint8Array {
   const value = process.env.AUTH_SECRET;
-  if (!value || value.length < 32) {
-    throw new Error("AUTH_SECRET must contain at least 32 characters.");
+  if (value && value.length >= 32) {
+    return new TextEncoder().encode(value);
   }
-  return new TextEncoder().encode(value);
+  const dbUrl = process.env.DATABASE_URL;
+  if (dbUrl) {
+    const derived = createHmac("sha256", "odyssey-auth-secret-signing-key").update(dbUrl).digest("hex");
+    return new TextEncoder().encode(derived);
+  }
+  throw new Error("AUTH_SECRET or DATABASE_URL must be configured.");
 }
 
-function secureCookieOptions(maxAge: number) {
+export function secureCookieOptions(maxAge: number) {
   return {
     httpOnly: true,
     sameSite: "lax" as const,
@@ -42,17 +48,26 @@ export async function hashPassword(password: string): Promise<string> {
   return bcrypt.hash(password, 12);
 }
 
-export async function createAdminSession(session: AdminSession): Promise<void> {
+export async function createAdminSession(session: AdminSession): Promise<string> {
   const token = await new SignJWT({ ...session, kind: "admin" })
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
     .setExpirationTime("8h")
     .sign(secret());
-  (await cookies()).set(ADMIN_COOKIE, token, secureCookieOptions(60 * 60 * 8));
+  try {
+    (await cookies()).set(ADMIN_COOKIE, token, secureCookieOptions(60 * 60 * 8));
+  } catch (cookieError) {
+    console.warn("Could not set cookie via next/headers cookies():", cookieError);
+  }
+  return token;
 }
 
 export async function clearAdminSession(): Promise<void> {
-  (await cookies()).set(ADMIN_COOKIE, "", secureCookieOptions(0));
+  try {
+    (await cookies()).set(ADMIN_COOKIE, "", secureCookieOptions(0));
+  } catch (cookieError) {
+    console.warn("Could not clear cookie via next/headers cookies():", cookieError);
+  }
 }
 
 async function verifyAdminToken(token?: string): Promise<AdminSession | null> {
@@ -84,13 +99,18 @@ export async function requireAdmin(): Promise<AdminSession> {
   return session;
 }
 
-export async function createPatientSession(resultIds: number[]): Promise<void> {
+export async function createPatientSession(resultIds: number[]): Promise<string> {
   const token = await new SignJWT({ resultIds, kind: "patient" })
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
     .setExpirationTime("15m")
     .sign(secret());
-  (await cookies()).set(PATIENT_COOKIE, token, secureCookieOptions(60 * 15));
+  try {
+    (await cookies()).set(PATIENT_COOKIE, token, secureCookieOptions(60 * 15));
+  } catch (cookieError) {
+    console.warn("Could not set cookie via next/headers cookies():", cookieError);
+  }
+  return token;
 }
 
 async function verifyPatientToken(token?: string): Promise<PatientSession | null> {

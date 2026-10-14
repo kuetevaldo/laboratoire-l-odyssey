@@ -1,6 +1,7 @@
 import { sql } from "drizzle-orm";
 import { NextResponse } from "next/server";
 import { getDb } from "@/db";
+import { administrators } from "@/db/schema";
 
 export const dynamic = "force-dynamic";
 
@@ -18,7 +19,7 @@ export async function GET() {
     const authSecret = process.env.AUTH_SECRET || "";
     const hasAuthSecret = authSecret.length >= 32;
 
-    const [adminRow] = await getDb().execute(sql`select count(*)::int as count from administrators`);
+    const adminRows = await getDb().select({ id: administrators.id }).from(administrators);
 
     return NextResponse.json(
       {
@@ -27,7 +28,7 @@ export async function GET() {
         dbHost,
         hasAuthSecret,
         authSecretLength: authSecret.length,
-        adminCount: Number(adminRow?.count ?? 0),
+        adminCount: adminRows.length,
         timestamp: new Date().toISOString(),
       },
       { headers: { "Cache-Control": "no-store" } },

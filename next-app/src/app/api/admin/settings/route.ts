@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 import { getDb } from "@/db";
 import { administrators } from "@/db/schema";
 import { apiError, apiSuccess, readableError } from "@/lib/api";
-import { createAdminSession, getAdminSessionFromRequest, hashPassword, verifyPassword } from "@/lib/auth";
+import { ADMIN_COOKIE, createAdminSession, getAdminSessionFromRequest, hashPassword, secureCookieOptions, verifyPassword } from "@/lib/auth";
 import { assertSameOrigin } from "@/lib/security";
 import { settingsSchema } from "@/lib/validators";
 
@@ -25,8 +25,10 @@ export async function PATCH(request: NextRequest) {
       passwordHash: input.newPassword ? await hashPassword(input.newPassword) : admin.passwordHash,
       updatedAt: new Date(),
     }).where(eq(administrators.id, admin.id));
-    await createAdminSession({ adminId: admin.id, username: input.username, displayName: input.displayName });
-    return apiSuccess({ message: "Profil administrateur mis à jour." });
+    const token = await createAdminSession({ adminId: admin.id, username: input.username, displayName: input.displayName });
+    const response = apiSuccess({ message: "Profil administrateur mis à jour." });
+    response.cookies.set(ADMIN_COOKIE, token, secureCookieOptions(60 * 60 * 8));
+    return response;
   } catch (error) {
     return apiError(readableError(error, "Impossible de mettre à jour le profil."));
   }

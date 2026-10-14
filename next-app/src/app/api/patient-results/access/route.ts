@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 import { getDb } from "@/db";
 import { patientResults } from "@/db/schema";
 import { apiError, apiSuccess, readableError } from "@/lib/api";
-import { createPatientSession, verifyPassword } from "@/lib/auth";
+import { PATIENT_COOKIE, createPatientSession, secureCookieOptions, verifyPassword } from "@/lib/auth";
 import { todayInDouala } from "@/lib/dates";
 import { assertSameOrigin, clearRateLimit, isRateLimited, recordRateFailure, requestIp } from "@/lib/security";
 import { patientAccessSchema } from "@/lib/validators";
@@ -29,8 +29,10 @@ export async function POST(request: NextRequest) {
       return apiError("Numéro patient ou code confidentiel incorrect.", 401);
     }
     await clearRateLimit(rateKey);
-    await createPatientSession(accessible.map((row) => row.id));
-    return apiSuccess({ message: "Accès autorisé.", patientName: accessible[0].patientName });
+    const token = await createPatientSession(accessible.map((row) => row.id));
+    const response = apiSuccess({ message: "Accès autorisé.", patientName: accessible[0].patientName });
+    response.cookies.set(PATIENT_COOKIE, token, secureCookieOptions(60 * 15));
+    return response;
   } catch (error) {
     return apiError(readableError(error, "Impossible de vérifier vos accès pour le moment."));
   }
