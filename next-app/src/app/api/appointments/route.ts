@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
     if (input.appointmentTime < "07:00" || input.appointmentTime > "20:00") {
       return apiError("Le laboratoire reçoit les rendez-vous de 07h à 20h.");
     }
-    await getDb().insert(appointments).values({
+    const [created] = await getDb().insert(appointments).values({
       name: input.name,
       phone: input.phone,
       email: input.email || null,
@@ -26,8 +26,8 @@ export async function POST(request: NextRequest) {
       appointmentDate: input.appointmentDate,
       appointmentTime: input.appointmentTime,
       notes: input.notes || null,
-    });
-    return apiSuccess({ message: "Votre demande a bien été envoyée. Notre équipe vous recontactera rapidement." }, 201);
+    }).returning({ id: appointments.id });
+    return apiSuccess({ id: created.id, message: "Votre demande a bien été envoyée. Notre équipe vous recontactera rapidement." }, 201);
   } catch (error) {
     return apiError(readableError(error, "Impossible d’envoyer la demande pour le moment."));
   }

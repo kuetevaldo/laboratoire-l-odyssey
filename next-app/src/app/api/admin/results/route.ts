@@ -30,15 +30,15 @@ export async function POST(request: NextRequest) {
     const bytes = await readPdf(file);
     key = privateResultKey();
     await putObject(key, bytes, "application/pdf");
-    await getDb().insert(patientResults).values({
+    const [created] = await getDb().insert(patientResults).values({
       patientNumber: input.patientNumber,
       patientName: input.patientName,
       accessCodeHash: await hashPassword(input.accessCode),
       fileName: file.name.toLowerCase().endsWith(".pdf") ? file.name : `${file.name}.pdf`,
       objectKey: key,
       expiresAt: input.expiresAt || null,
-    });
-    return apiSuccess({ message: "Résultat publié avec succès." }, 201);
+    }).returning({ id: patientResults.id });
+    return apiSuccess({ id: created.id, message: "Résultat publié avec succès." }, 201);
   } catch (error) {
     if (key) await deleteObject(key).catch(() => undefined);
     return apiError(readableError(error, "Impossible de publier ce résultat."));

@@ -12,18 +12,30 @@ export type StoredObject = {
 
 let client: S3Client | undefined;
 
+function storageConfiguration() {
+  return {
+    endpoint: process.env.S3_ENDPOINT || process.env.AWS_ENDPOINT_URL_S3,
+    region: process.env.S3_REGION || process.env.AWS_REGION || "us-east-2",
+    accessKeyId: process.env.S3_ACCESS_KEY_ID || process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || process.env.AWS_SECRET_ACCESS_KEY,
+    bucket: process.env.S3_BUCKET,
+  };
+}
+
 function hasS3Configuration(): boolean {
-  return Boolean(process.env.S3_ENDPOINT && process.env.S3_ACCESS_KEY_ID && process.env.S3_SECRET_ACCESS_KEY && process.env.S3_BUCKET);
+  const config = storageConfiguration();
+  return Boolean(config.endpoint && config.accessKeyId && config.secretAccessKey && config.bucket);
 }
 
 function s3Client(): S3Client {
+  const config = storageConfiguration();
   client ??= new S3Client({
-    endpoint: process.env.S3_ENDPOINT,
-    region: process.env.S3_REGION || "us-east-2",
+    endpoint: config.endpoint,
+    region: config.region,
     forcePathStyle: true,
     credentials: {
-      accessKeyId: process.env.S3_ACCESS_KEY_ID!,
-      secretAccessKey: process.env.S3_SECRET_ACCESS_KEY!,
+      accessKeyId: config.accessKeyId!,
+      secretAccessKey: config.secretAccessKey!,
     },
   });
   return client;
@@ -44,7 +56,7 @@ function localPath(key: string): string {
 export async function putObject(key: string, bytes: Uint8Array, contentType: string): Promise<void> {
   key = safeKey(key);
   if (hasS3Configuration()) {
-    await s3Client().send(new PutObjectCommand({ Bucket: process.env.S3_BUCKET!, Key: key, Body: bytes, ContentType: contentType }));
+    await s3Client().send(new PutObjectCommand({ Bucket: storageConfiguration().bucket!, Key: key, Body: bytes, ContentType: contentType }));
     return;
   }
   if (process.env.NODE_ENV === "production") throw new Error("S3 storage is not configured.");
@@ -58,7 +70,7 @@ export async function getObject(key: string): Promise<StoredObject | null> {
   key = safeKey(key);
   if (hasS3Configuration()) {
     try {
-      const result = await s3Client().send(new GetObjectCommand({ Bucket: process.env.S3_BUCKET!, Key: key }));
+      const result = await s3Client().send(new GetObjectCommand({ Bucket: storageConfiguration().bucket!, Key: key }));
       if (!result.Body) return null;
       const bytes = await result.Body.transformToByteArray();
       return { bytes, contentType: result.ContentType || "application/octet-stream", contentLength: result.ContentLength || bytes.byteLength };
@@ -83,7 +95,7 @@ export async function getObject(key: string): Promise<StoredObject | null> {
 export async function deleteObject(key: string): Promise<void> {
   key = safeKey(key);
   if (hasS3Configuration()) {
-    await s3Client().send(new DeleteObjectCommand({ Bucket: process.env.S3_BUCKET!, Key: key }));
+    await s3Client().send(new DeleteObjectCommand({ Bucket: storageConfiguration().bucket!, Key: key }));
     return;
   }
   const target = localPath(key);
