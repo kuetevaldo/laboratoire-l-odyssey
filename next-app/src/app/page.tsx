@@ -51,7 +51,17 @@ export default function HomePage() {
 
       <section className="section care-section"><div className="container care-grid">
         <div className="care-gallery reveal"><figure className="care-main-image"><Image src="/images/reproductive-care.jpg" alt="Santé reproductive féminine" fill sizes="(max-width: 900px) 100vw, 50vw" /></figure><figure className="care-small-image"><Image src="/images/diagnostic-2.jpg" alt="Diagnostic médical" fill sizes="280px" /></figure><div className="care-badge"><strong>Une prise en charge</strong><span>discrète et personnalisée</span></div></div>
-        <div className="care-content reveal"><h2>Une équipe qui vous écoute avant de vous examiner.</h2><p>Nous accordons autant d’importance à la qualité des analyses qu’à la façon dont vous êtes accueilli et informé.</p><ul className="care-list"><li><Check /> Accueil attentif et confidentiel</li><li><Check /> Explications claires à chaque étape</li><li><Check /> Résultats accessibles en ligne</li></ul><Link className="btn-secondary" href="/about">Découvrir le laboratoire</Link></div>
+        <div className="care-content reveal">
+          <p className="eyebrow"><span /> Votre parcours de soins</p>
+          <h2>Une équipe qui vous écoute avant de vous examiner.</h2>
+          <p>Nous accordons autant d’importance à la qualité des analyses qu’à la façon dont vous êtes accueilli et informé.</p>
+          <ul className="care-list">
+            <li><span>01</span><div><strong>Accueil et orientation</strong><p>Votre besoin est clarifié dès votre arrivée avec écoute et discrétion.</p></div></li>
+            <li><span>02</span><div><strong>Examen ou prélèvement</strong><p>Chaque geste est expliqué avec simplicité et réalisé avec rigueur.</p></div></li>
+            <li><span>03</span><div><strong>Résultat et suivi</strong><p>Vos documents restent accessibles en ligne de façon sécurisée et rapide.</p></div></li>
+          </ul>
+          <Link className="btn-secondary" href="/about">Découvrir le laboratoire</Link>
+        </div>
       </div></section>
 
       <section className="results-callout reveal"><div className="container results-callout-grid"><div className="results-callout-copy"><span className="results-icon"><ShieldCheck /></span><div><h2>Vos résultats, disponibles quand vous en avez besoin.</h2><p>Accédez à vos documents avec les identifiants confidentiels remis par le laboratoire.</p></div></div><Link className="btn-light" href="/results">Accéder à mes résultats <ArrowRight /></Link></div></section>
