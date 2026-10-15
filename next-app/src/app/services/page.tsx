@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, HeartPulse, Microscope, Stethoscope, Waves } from "lucide-react";
 import { BackHome } from "@/components/BackHome";
@@ -16,7 +15,6 @@ export const metadata: Metadata = {
 const featuredServices = [
   {
     title: "Analyses médicales",
-    image: "/images/lab-tests.jpg",
     icon: Microscope,
     text: "Des examens biologiques réalisés pour le dépistage, le diagnostic et le suivi rigoureux de votre santé.",
     items: [
@@ -28,7 +26,6 @@ const featuredServices = [
   },
   {
     title: "Échographie",
-    image: "/images/ultrasound.jpg",
     icon: Waves,
     text: "Un examen d’imagerie non invasif réalisé dans un cadre confidentiel et bienveillant, avec explications claires.",
     items: [
@@ -40,7 +37,6 @@ const featuredServices = [
   },
   {
     title: "Consultation",
-    image: "/images/consultation.jpg",
     icon: Stethoscope,
     text: "Un temps d’écoute médicale pour comprendre vos besoins, évaluer vos symptômes et vous orienter avec précision.",
     items: [
@@ -52,7 +48,6 @@ const featuredServices = [
   },
   {
     title: "Biologie de la reproduction",
-    image: "/images/biology-reproductif.jpg",
     icon: HeartPulse,
     text: "Des bilans ciblés pour accompagner la fertilité et la santé reproductive féminine et masculine avec la plus grande discrétion.",
     items: [
@@ -93,14 +88,6 @@ export default function ServicesPage() {
               const Icon = service.icon;
               return (
                 <article className="service-detail reveal" key={service.title}>
-                  <div className="service-detail-media">
-                    <Image
-                      src={service.image}
-                      alt={service.title}
-                      fill
-                      sizes="(max-width: 800px) 100vw, 50vw"
-                    />
-                  </div>
                   <div className="service-detail-copy">
                     <Icon aria-hidden="true" />
                     <h2>{service.title}</h2>
