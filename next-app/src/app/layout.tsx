@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { SiteEnhancements } from "@/components/SiteEnhancements";
+import { WhatsAppCTA } from "@/components/ui/whatsapp-cta";
 import "./globals.css";
 import "./admin.css";
 
@@ -21,5 +22,13 @@ export const metadata: Metadata = {
 export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#19764b" };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="fr"><body><SiteEnhancements />{children}</body></html>;
+  return (
+    <html lang="fr">
+      <body>
+        <SiteEnhancements />
+        {children}
+        <WhatsAppCTA />
+      </body>
+    </html>
+  );
 }
