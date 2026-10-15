@@ -11,6 +11,7 @@ const contentSecurityPolicy = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob:",
   "media-src 'self' blob:",
+  "frame-src https://www.google.com",
   "font-src 'self' data:",
   "connect-src 'self'",
   "worker-src 'self' blob:",
