@@ -5,6 +5,7 @@
 
 [build.environment]
   NODE_VERSION = "22"
+  SECRETS_SCAN_OMIT_KEYS = "S3_BUCKET,NEXT_PUBLIC_SITE_URL,S3_REGION"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
