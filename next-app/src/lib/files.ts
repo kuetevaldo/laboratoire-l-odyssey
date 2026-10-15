@@ -1,6 +1,7 @@
 import "server-only";
 
 import { randomUUID } from "node:crypto";
+import { MAX_UPLOAD_BYTES, MAX_UPLOAD_LABEL } from "@/lib/upload-limits";
 
 const imageTypes = new Map([
   ["image/jpeg", [0xff, 0xd8, 0xff]],
@@ -13,7 +14,7 @@ function hasPrefix(bytes: Uint8Array, prefix: number[]): boolean {
 }
 
 export async function readPdf(file: File): Promise<Uint8Array> {
-  if (file.size === 0 || file.size > 10 * 1024 * 1024) throw new Error("Le PDF doit peser moins de 10 Mo.");
+  if (file.size === 0 || file.size > MAX_UPLOAD_BYTES) throw new Error(`Le PDF doit peser moins de ${MAX_UPLOAD_LABEL}.`);
   const bytes = new Uint8Array(await file.arrayBuffer());
   if (file.type !== "application/pdf" || !hasPrefix(bytes, [0x25, 0x50, 0x44, 0x46, 0x2d])) {
     throw new Error("Le fichier sélectionné doit être un PDF valide.");
@@ -22,7 +23,7 @@ export async function readPdf(file: File): Promise<Uint8Array> {
 }
 
 export async function readImage(file: File): Promise<{ bytes: Uint8Array; extension: string }> {
-  if (file.size === 0 || file.size > 5 * 1024 * 1024) throw new Error("L’image doit peser moins de 5 Mo.");
+  if (file.size === 0 || file.size > MAX_UPLOAD_BYTES) throw new Error(`L’image doit peser moins de ${MAX_UPLOAD_LABEL}.`);
   const prefix = imageTypes.get(file.type);
   if (!prefix) throw new Error("Utilisez une image JPG, PNG ou WebP.");
   const bytes = new Uint8Array(await file.arrayBuffer());
